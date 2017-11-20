@@ -1,8 +1,9 @@
 
- # PHF Philippines Fire Coin
+
+# PHF Philippines Fire Coin
 
 Copyright (c) 2017, Phfirecoin
-
+ 
 **Development and Community Resources**
 
 <Hr>
