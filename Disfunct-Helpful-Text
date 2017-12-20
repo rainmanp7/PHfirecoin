@@ -1,0 +1,30 @@
+grep -wnri 'genesis' *
+
+You don't nessecerly need this ,but for bitcoin you do.
+-------------------------------------------------------------------------
+EASSIEST WAY TO GET BERKLEY LIBDB 4.8 for those special wallets and coins.
+Do this first to open up repository= Time estimation of few minutes... less then 5 minutes
+
+sudo add-apt-repository ppa:bitcoin/bitcoin
+
+Do this next to get the proper files
+
+sudo apt-get update
+sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
+
+
+Another Version of how to obtain this
+========================================
+Berkley Libdb 4.8
+
+wget http://download.oracle.com/berkeley-db/db-4.8.30.tar.gz
+tar -xzvf db-4.8.30.tar.gz
+cd db-4.8.30.tar.gz/build_unix
+../dist/configure --enable-cxx
+make
+sudo make install
+-------------------------------------------------------------
+
+
+
+
