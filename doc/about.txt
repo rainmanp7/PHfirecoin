@@ -1,4 +1,7 @@
-DigitalNote XDN
+PHfirecoin Started on 11/09/2017
+Forked From:
+
+Digital Note XDN
 =====================
 
 Intro
