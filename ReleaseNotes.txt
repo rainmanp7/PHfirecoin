@@ -1,0 +1,73 @@
+Notes: o1-11-2018 updated and fixed various issues to many to mention here.
+Digitalnote forked over with allot less errors within. Still a work in progress...
+This is intial testing code release for phfirecoin. Started back in 10/27/2017
+
+Now running on
+Boost 1.55 Cmake 10.1 GCC7
+Compiled under lunbuntu
+Light weight unbuntu series.
+
+
+ notes 4.0.3-beta
+
+- Blockchain synchronization improvements
+
+Release notes 4.0.2-beta
+
+- Latest checkpoints and fixes
+
+Release notes 4.0.1-beta
+
+- Default block size updated to 200Kb to avoid any unconfirmed transactions
+- Mining update
+
+Release notes 4.0.0-beta
+
+- Empowering XDN network security with merged mining with any CryptoNote cryptocurrency
+- Second step to the PoA with the new type of PoW merged mining blocks
+
+Release notes 3.1.0-beta
+
+- Messages 2.0 core support
+- Messages API for simplewallet
+- Basic access authentication
+
+Release notes 3.0.0-beta
+
+- New industrial type wallet for services: walletd
+- New RPC-API for walletd
+- XDN addresses for services and processing centers: multi-addresses. Can use instead of Payment ID, like Bitcoin
+- Transactions pool synchronization
+- Network layer refactoring
+- Extra high wallet synchronization speed
+- New multithreading library
+- Improved console logging
+
+Release notes 2.0.0-beta
+
+- DigitalNote
+- Multisignatures with API
+- Deposits based on multisignatures
+
+- Low level API
+- High level API improvements
+- Instant transaction pool notifications
+- Refactored simplewallet
+- Optimization in daemon RAM consumption
+- Minor network health updates
+
+Release notes 1.0.2
+
+- JSON RPC for encrypted messages
+
+Release notes 1.0.1
+
+- Encrypted messages implementation
+
+Release notes 1.0.0
+
+- DarkNote
+
+Release notes 0.8.9
+
+- duckNote
