@@ -1,0 +1,224 @@
+grep -wnri 'genesis' *
+
+You don't nessecerly need this ,but for bitcoin you do.
+This is not necceseraly needed for any cryptonote coin compilation.
+-------------------------------------------------------------------------
+EASSIEST WAY TO GET BERKLEY LIBDB 4.8 for those special wallets and coins.
+Do this first to open up repository= Time estimation of few minutes... less then 5 minutes
+
+sudo add-apt-repository ppa:bitcoin/bitcoin
+
+Do this next to get the proper files
+
+sudo apt-get update
+sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
+
+This is not necceseraly needed for any cryptonote coin compilation.
+Another Version of how to obtain this
+========================================
+Berkley Libdb 4.8
+
+wget http://download.oracle.com/berkeley-db/db-4.8.30.tar.gz
+tar -xzvf db-4.8.30.tar.gz
+cd db-4.8.30.tar.gz/build_unix
+../dist/configure --enable-cxx
+make
+sudo make install
+-------------------------------------------------------------
+
+Another way to install the cmake .sometimes this works ,but will give a good idea.
+
+==============================================
+CMAKE
+
+The hardway around 25-38 minutes time
+
+./bootstrap --prefix=/usr/
+
+
+then build it with
+
+make
+
+After building it then install it
+
+sudo make install 
+
+
+Then all you do next to install it is run this command
+
+sudo ./bootstrap && make && make install
+
+
+on unix or solaris use su instead of sudo
+
+
+
+
+wget https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz
+tar -xzvf https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz
+cd https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz/build_unix
+../dist/configure --enable-cxx
+make
+sudo make install
+
+=============================================
+=============================================
+
+
+BOOST -building for your platform. -> Talking about building from scratch!
+build time will be anywhere from 25-30-45 minutes
+
+make sure you have build essentials installed. this will put the gcc compiler in place.
+Get the boost files downloaded and extracted and cd to the main dir ,,,,then pop up terminal
+
+./bootstrap.sh --prefix=/usr/
+
+then build it with
+
+./b2
+
+After building it then install it
+
+sudo ./b2 install 
+
+on unix or solaris use su instead of sudo
+
+======================================================
+
+This information is disfunctional but gives good hints for building any crypto coin.
+
+
+Building other coins and forking files....
+copy and paste this directly into the terminal and hit enter.
+
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get -y install build-essential python-dev gcc-4.9 g++-4.9 git cmake libboost1.58-all-dev librocksdb-dev unzip libcurl4-openssl-dev git autotools-dev autoconf
+sudo apt-get -y install libcurl3 libcurl4-gnutls-dev
+sudo apt-get -y install build-essential libssl-dev libdb-dev libdb++-dev libboost-all-dev libqrencode-dev qt4-qmake libqtgui4 libqt4-dev libprotobuf-dev libprotoc-dev protobuf-compiler git autoconf automake
+sudo apt-get -y install gcc-c++ make glibc-devel libopenssl-devel libdb-4_8-devel boost-devel qrencode-devel devel_qt4 libqt4-x11 libqt4-devel protobuf-devel protobuf-c libprotoc7 git autoconf automake
+sudo apt-get -y install i2psam gcc GCC 4.7.3 CMake 2.8.6 Boost 1.53 GCC 4.7.3
+
+other temporary fixes
+export BDB_INCLUDE_PATH="/usr/local/BerkeleyDB.4.8/include"
+export BDB_LIB_PATH="/usr/local/BerkeleyDB.4.8/lib"
+ln -s /usr/local/BerkeleyDB.4.8/lib/libdb-4.8.so /usr/lib/libdb-4.8.so
+
+
+This is for building other coins not specifically cryptonote
+echo "WARNING: Please add following PPA to ensure you have libdb-4.8 and not running anything higher.
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get -y install build-essential python-dev gcc-4.9 g++-4.9 git cmake libboost1.58-all-dev librocksdb-dev unzip libcurl4-openssl-dev git autotools-dev autoconf
+sudo apt-get -y install libcurl3 libcurl4-gnutls-dev
+sudo apt-get -y install build-essential libssl-dev libdb-dev libdb++-dev libboost-all-dev libqrencode-dev qt4-qmake libqtgui4 libqt4-dev libprotobuf-dev libprotoc-dev protobuf-compiler git autoconf automake
+sudo apt-get -y install gcc-c++ make glibc-devel libopenssl-devel libdb-4_8-devel boost-devel qrencode-devel devel_qt4 libqt4-x11 libqt4-devel protobuf-devel protobuf-c libprotoc7 git autoconf automake
+sudo apt-get -y install i2psam gcc GCC 4.7.3 CMake 2.8.6 Boost 1.53 GCC 4.7.3
+echo "WARNING: After you install everything please make sure your using libdb-4.8 and not anything else. On updating the version 5 puts it'self back in and up front
+=============================================================================================================================
+
+-------------------------------------------------------------
+
+SPECIAL BOOST INFORMATION
+
+
+#!/bin/bash
+
+#Update repositories list
+sudo apt-get update
+
+#Completely remove boost
+sudo apt-get -y --purge remove libboost-all-dev libboost-doc libboost-dev
+sudo rm -f /usr/lib/libboost_*
+
+#Install required packages
+sudo apt-get -y install build-essential g++ python-dev autotools-dev libicu-dev libbz2-dev
+
+#Download boost
+cd /tmp
+wget http://downloads.sourceforge.net/project/boost/boost/1.54.0/boost_1_56_0.tar.gz
+tar -zxvf boost_1_56_0.tar.gz
+rm -f boost_1_56_0.tar.gz
+cd boost_1_56_0
+
+#Compile and install
+sudo ./bootstrap.sh --prefix=/usr/local
+cpuCores=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk '{print $NF}'`
+echo "Available CPU cores: "$cpuCores
+
+sudo ./b2 --with=all -j $cpuCores install
+
+
+sudo ./b2 install
+
+
+cd ..
+rm -rf boost_1_53_0
+==========================================================
+IT'S SUPER EXTREMELY IMPORTANT TO MAKE THREAD POOL ,this is the reason for thread errors if you get them !
+===============================================================================================================
+#Install boost-thread-pool
+git clone https://github.com/AlexMarlo/boost-threadpool.git --depth 1
+sudo mv boost-threadpool/boost/threadpool /usr/local/include/boost/
+sudo mv boost-threadpool/boost/threadpool.hpp /usr/local/include/boost/
+rm -rf boost-threadpool
+If this does not work ? then you need to do this command by command till it does.
+==============================================
+
+HOW TO REMOVE BOOST and other things as an example.
+===================================================
+dependency issue with boost
+---------------------------------------------- This will remove boost
+sudo apt-get --purge remove libboost-dev
+sudo apt-get --purge remove libboost-all-dev
+
+sudo apt-get --purge remove libboost1.55-all-dev
+
+sudo apt-get autoremove libboost-dev    <-This removed allot
+
+Go into the operating system and software manager and remove the version5 as well.
+
+﻿This cmake files like the boost library 1.53  <-They are always referring to this
+sudo add-apt-repository ppa:apokluda/boost1.53
+
+This will get the repositorty rolling
+ 
+might work => sudo apt-get install libboost1.53-all-dev
+===============================================================
+sudo apt-get autoremove fonts-opensymbol libcdr-0.0-0 libclucene-contribs1 libclucene-core1
+  libcolamd2.8.0 libexttextcat-2.0-0 libexttextcat-data libhyphen0
+  liblangtag-common liblangtag1 libmhash2 libmspub-0.0-0 libmythes-1.2-0
+  libneon27-gnutls libraptor2-0 librasqal3 librdf0 libreoffice-common
+  libvisio-0.0-0 libwpd-0.9-9 libwpg-0.2-2 libwps-0.2-2 libyajl2 lp-solve
+  nvidia-libopencl1-384 uno-libs3 ure xfonts-mathml
+
+=================== This worked to help remove trash
+Make sure if your on unbuntu14 etc
+you get these nessecery files and dependencies.
+
+--->  sudo apt-get install build-essential git cmake  <---
+
+After you remove the un needed then you are good.
+
+extract boost into the home directory
+
+cd boost_1_53_0/
+
+sudo ./bootstrap.sh --with-libraries=atomic,date_time,exception,filesystem,iostreams,locale,program_options,regex,signals,system,test,thread,timer,log
+
+sudo ./b2 install
+
+after you compile this thing ,then you will need to do the threads part.
+this will allow programs to read it correctly.
+
+===========================================================
+
+
+
+
+
+
+
+
+
