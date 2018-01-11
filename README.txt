@@ -1,6 +1,7 @@
-## Coin = PHfirecoin.
-## Based and forked from great people
-## at Digital Note.
+## Coin Name = PHfirecoin.
+## Based and forked from the great people
+## at Ducknote/Darknote/Digital Note.
+## Testing Deamon & Simple-Wallet
 
 Website:
 Http://www.phfirecoin.com
@@ -11,7 +12,7 @@ https://discord.gg/hzuRz43
 Twitter:
 @phfirecoin
 
-### On *nix:
+### Building on Linux:
 Your source files will be built in a directory
 Newly created ,named build
 Then src etc..
