@@ -3,6 +3,11 @@
 ## at Ducknote/Darknote/Digital Note.
 ## Testing Deamon & Simple-Wallet
 
+Current known testing errors:
+When deamon first comes up it will be fine
+Then you will see it try to connect to a real seed node ,but it will just give handshake error because it's on a different network.
+That is a normal responce.
+
 Website:
 Http://www.phfirecoin.com
 
