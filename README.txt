@@ -9,13 +9,14 @@ Then you will see it try to connect to a real seed node ,but it will just give h
 That is a normal responce.
 
 Website:
-Http://www.phfirecoin.com
+http://www.phfirecoin.com
 
 Discord:
 https://discord.gg/hzuRz43
 
 Twitter:
 @phfirecoin
+
 
 ### Building on Linux:
 Your source files will be built in a directory
