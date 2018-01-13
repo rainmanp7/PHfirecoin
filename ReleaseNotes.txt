@@ -1,4 +1,5 @@
-Notes: o1-11-2o18 updated and fixed various issues to many to mention here.
+PHfirecoin Notes: o1-11-2o18 
+updated and fixed various issues to many to mention here.
 Digitalnote forked over with allot less errors within. Still a work in progress...
 This is intial testing code release for phfirecoin. Started back in 10/27/2017
 
@@ -7,6 +8,7 @@ Boost 1.55 Cmake 10.1 GCC7
 Compiled under lunbuntu
 Light weight unbuntu series.
 
+========================
 
  notes 4.0.3-beta
 -Blockchain synchronization improvements
