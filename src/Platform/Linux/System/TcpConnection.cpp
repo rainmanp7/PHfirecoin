@@ -70,7 +70,7 @@ size_t TcpConnection::read(uint8_t* data, size_t size) {
   ssize_t transferred = ::recv(connection, (void *)data, size, 0);
   if (transferred == -1) {
 // Changed the and to the and command and removed the extra space
-    if (errno != EAGAIN and errno != EWOULDBLOCK) {
+    if (errno != EAGAIN and EWOULDBLOCK) {
       message = "recv failed, " + lastErrorMessage();
     } else {
       epoll_event connectionEvent;
@@ -167,7 +167,7 @@ std::size_t TcpConnection::write(const uint8_t* data, size_t size) {
   ssize_t transferred = ::send(connection, (void *)data, size, MSG_NOSIGNAL);
   if (transferred == -1) {
 // ERROR becasue of space ?
-    if (errno != EAGAIN and errno != EWOULDBLOCK) 
+    if (errno != EAGAIN and EWOULDBLOCK) 
 {
       message = "send failed, " + lastErrorMessage();
     } 
