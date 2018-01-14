@@ -1,0 +1,38 @@
+The first folder with deamon and simplewallet and walletd in folder.
+at the terminal
+
+./phfired --p2p-bind-port=28080 --allow-local-ip
+
+You get this up and running first.
+========================================
+Next you copy the same files into a new folder.
+
+You start this one as a second node ,connecting to the first.
+
+at the terminal
+
+./phfired --p2p-bind-port=5011 --rpc-bind-port=5010 --add-peer 0.0.0.0:28080 --allow-local-ip
+
+==========================================
+The second will connect to the first deamon.
+
+You can now go back to the first folder and terminal from there...
+./simplewallet
+
+Generate a new one
+name=test
+pass=test
+
+==========================================
+4th Step.
+Inside the first deamon
+you will copy the address of the simplewallet
+and type into the 1st deamon ,this command
+
+start_mining walletaddress 2
+
+Replace the walletaddress with the simple wallet address.
+=========================================================
+
+You will notice something happen at this point :)
+
