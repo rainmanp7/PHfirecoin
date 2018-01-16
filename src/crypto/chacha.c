@@ -86,7 +86,24 @@ void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t*
     x13 = j13;
     x14 = j14;
     x15 = j15;
-    for (i = 0; i < doubleRounds; i++) {
+
+//Example aplicable testing that could actually work.
+//for (unsigned int i = 0; i < sizeof(r)/sizeof(r[0]); ++i ){ 
+//        r[i]= 0; 
+///}
+
+// Error prone example
+//for ( i= 0; i < sizeof(r)/sizeof(r[0]); ++i ){ 
+//        r[i]= 0; 
+//}
+//rainmanp7 turned the i into an unassigned vary for the loop 01-16-2018
+
+//original code
+//   for (i = 0; i < doubleRounds; i++) {
+
+
+
+   for (unsigned int i = 0; i < doubleRounds; i++) {
       QUARTERROUND( x0, x4, x8,x12)
       QUARTERROUND( x1, x5, x9,x13)
       QUARTERROUND( x2, x6,x10,x14)

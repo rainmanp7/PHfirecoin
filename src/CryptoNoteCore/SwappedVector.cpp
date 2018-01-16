@@ -5,6 +5,12 @@
 
 #include "SwappedVector.h"
 
+
 namespace {
-char suppressMSVCWarningLNK4221;
+//char suppressMSVCWarningLNK4221;
 }
+
+//Super nullify
+//int var;    // var is not used
+//(void)var;  // null statement, cast to void -- suppresses warning
+

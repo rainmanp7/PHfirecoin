@@ -95,7 +95,14 @@ else()
       set(CMAKE_AR gcc-ar)
       set(CMAKE_RANLIB gcc-ranlib)
     endif()
-    set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto")
+
+# Setting LTO to off 2018 rainmanp7   
+# set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto")
+#Don't set this to off unless you want to see allot of errors.
+
+set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto")
+
+
   endif()
   #if(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND NOT MINGW)
   #  set(RELEASE_FLAGS "${RELEASE_FLAGS} -fno-fat-lto-objects")

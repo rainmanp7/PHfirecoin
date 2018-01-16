@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2006, Google Inc.
+// Copyright (c) 2006, Google Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,8 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+
+// ----
 // Author: Matt Austern
 //
 // Define a small subset of tr1 type traits. The traits we define are:
@@ -310,7 +311,7 @@ namespace internal {
 // return types of different size, so we can use sizeof to trick the
 // compiler into telling us which function it would have chosen if we
 // had called it with an argument of type From.  See Alexandrescu's
-// _Modern C� Design_ for more details on this sort of trick.
+// _Modern C++ Design_ for more details on this sort of trick.
 
 template <typename From, typename To>
 struct ConvertHelper {
