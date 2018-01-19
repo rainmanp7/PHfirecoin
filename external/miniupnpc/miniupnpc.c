@@ -336,10 +336,8 @@ parseMSEARCHReply(const char * reply, int size,
  * It is up to the caller to free the chained list
  * delay is in millisecond (poll) */
 LIBSPEC struct UPNPDev *
-upnpDiscover(int delay, const char * multicastif,
-             const char * minissdpdsock, int sameport,
-             int ipv6,
-             int * error)
+upnpDiscover(int delay, const char *multicastif, const char *minissdpdsock, int sameport, int ipv6, unsigned char error,
+			 int *pInt)
 {
 	struct UPNPDev * tmp;
 	struct UPNPDev * devlist = 0;
@@ -381,7 +379,7 @@ upnpDiscover(int delay, const char * multicastif,
 	int linklocal = 1;
 
 	if(error)
-		*error = UPNPDISCOVER_UNKNOWN_ERROR;
+		error = UPNPDISCOVER_UNKNOWN_ERROR;
 #if !defined(_WIN32) && !defined(__amigaos__) && !defined(__amigaos4__)
 	/* first try to get infos from minissdpd ! */
 	if(!minissdpdsock)
@@ -392,7 +390,7 @@ upnpDiscover(int delay, const char * multicastif,
 		/* We return what we have found if it was not only a rootdevice */
 		if(devlist && !strstr(deviceList[deviceIndex], "rootdevice")) {
 			if(error)
-				*error = UPNPDISCOVER_SUCCESS;
+				error = UPNPDISCOVER_SUCCESS;
 			return devlist;
 		}
 		deviceIndex++;
@@ -408,7 +406,7 @@ upnpDiscover(int delay, const char * multicastif,
 	if(sudp < 0)
 	{
 		if(error)
-			*error = UPNPDISCOVER_SOCKET_ERROR;
+			error = UPNPDISCOVER_SOCKET_ERROR;
 		PRINT_SOCKET_ERROR("socket");
 		return NULL;
 	}
@@ -494,7 +492,7 @@ upnpDiscover(int delay, const char * multicastif,
 #endif
 	{
 		if(error)
-			*error = UPNPDISCOVER_SOCKET_ERROR;
+			error = UPNPDISCOVER_SOCKET_ERROR;
 		PRINT_SOCKET_ERROR("setsockopt");
 		return NULL;
 	}
@@ -551,14 +549,14 @@ upnpDiscover(int delay, const char * multicastif,
 	         ipv6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in)) != 0)
 	{
 		if(error)
-			*error = UPNPDISCOVER_SOCKET_ERROR;
+			error = UPNPDISCOVER_SOCKET_ERROR;
         PRINT_SOCKET_ERROR("bind");
 		closesocket(sudp);
 		return NULL;
     }
 
 	if(error)
-		*error = UPNPDISCOVER_SUCCESS;
+		error = UPNPDISCOVER_SUCCESS;
 	/* Calculating maximum response time in seconds */
 	mx = ((unsigned int)delay) / 1000u;
 	if(mx == 0) {
@@ -616,7 +614,7 @@ upnpDiscover(int delay, const char * multicastif,
 		                      : UPNP_MCAST_ADDR,
 		                      XSTR(PORT), &hints, &servinfo)) != 0) {
 			if(error)
-				*error = UPNPDISCOVER_SOCKET_ERROR;
+				error = UPNPDISCOVER_SOCKET_ERROR;
 #ifdef _WIN32
 		    fprintf(stderr, "getaddrinfo() failed: %d\n", rv);
 #else
@@ -641,7 +639,7 @@ upnpDiscover(int delay, const char * multicastif,
 		freeaddrinfo(servinfo);
 		if(n < 0) {
 			if(error)
-				*error = UPNPDISCOVER_SOCKET_ERROR;
+				error = UPNPDISCOVER_SOCKET_ERROR;
 			break;
 		}
 #endif /* #ifdef NO_GETADDRINFO */
@@ -651,14 +649,14 @@ upnpDiscover(int delay, const char * multicastif,
 	if (n < 0) {
 		/* error */
 		if(error)
-			*error = UPNPDISCOVER_SOCKET_ERROR;
+			error = UPNPDISCOVER_SOCKET_ERROR;
 		break;
 	} else if (n == 0) {
 		/* no data or Time Out */
 		if (devlist) {
 			/* no more device type to look for... */
 			if(error)
-				*error = UPNPDISCOVER_SUCCESS;
+				error = UPNPDISCOVER_SUCCESS;
 			break;
 		}
 		if(ipv6) {
@@ -697,7 +695,7 @@ upnpDiscover(int delay, const char * multicastif,
 			if(!tmp) {
 				/* memory allocation error */
 				if(error)
-					*error = UPNPDISCOVER_MEMORY_ERROR;
+					error = UPNPDISCOVER_MEMORY_ERROR;
 				break;
 			}
 			tmp->pNext = devlist;

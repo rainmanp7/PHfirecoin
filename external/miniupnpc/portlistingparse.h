@@ -55,6 +55,8 @@ struct PortMapping {
 struct PortMappingParserData {
 	LIST_HEAD(portmappinglisthead, PortMapping) head;
 	portMappingElt curelt;
+    struct PortMapping *l_head;
+	struct PortMapping *l_next;
 };
 
 LIBSPEC void

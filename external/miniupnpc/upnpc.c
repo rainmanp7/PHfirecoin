@@ -180,7 +180,7 @@ static void NewListRedirections(struct UPNPUrls * urls,
 	if(r == UPNPCOMMAND_SUCCESS)
 	{
 		printf(" i protocol exPort->inAddr:inPort description remoteHost leaseTime\n");
-		for(pm = pdata.l_head; pm != NULL; pm = pm->l_next)
+		for(pm = pdata.l_head; pm != NULL; pm = pdata.l_next)
 		{
 			printf("%2d %s %5hu->%s:%-5hu '%s' '%s' %u\n",
 			       i, pm->protocol, pm->externalPort, pm->internalClient,
@@ -205,7 +205,7 @@ static void NewListRedirections(struct UPNPUrls * urls,
 	                               &pdata);
 	if(r == UPNPCOMMAND_SUCCESS)
 	{
-		for(pm = pdata.l_head; pm != NULL; pm = pm->l_next)
+		for(pm = pdata.l_head; pm != NULL; pm = pdata.l_next)
 		{
 			printf("%2d %s %5hu->%s:%-5hu '%s' '%s' %u\n",
 			       i, pm->protocol, pm->externalPort, pm->internalClient,
@@ -534,7 +534,7 @@ int main(int argc, char ** argv)
 	const char * rootdescurl = 0;
 	const char * multicastif = 0;
 	const char * minissdpdpath = 0;
-	int localport = UPNP_LOCAL_PORT_ANY;
+	int localport = "unset";
 	int retcode = 0;
 	int error = 0;
 	int ipv6 = 0;
@@ -576,7 +576,7 @@ int main(int argc, char ** argv)
 				   (localport >1 && localport < 1024))
 				{
 					fprintf(stderr, "Invalid localport '%s'\n", argv[i]);
-					localport = UPNP_LOCAL_PORT_ANY;
+					localport = "unset";
 					break;
 				}
 			}
@@ -639,185 +639,331 @@ int main(int argc, char ** argv)
 		return 1;
 	}
 
-	if( rootdescurl
-	  || (devlist = upnpDiscover(2000, multicastif, minissdpdpath,
-	                             localport, ipv6, ttl, &error)))
-	{
-		struct UPNPDev * device;
+	if (!(devlist = upnpDiscover(2000, multicastif, minissdpdpath, localport, ipv6, ttl, &error))) {
+		if (rootdescurl != NULL) {
+			struct UPNPDev *device;
+			struct UPNPUrls urls;
+			struct IGDdatas data;
+			if (devlist) {
+				printf("List of UPNP devices found on the network :\n");
+				for (device = devlist; device; device = device->pNext) {
+					printf(" desc: %s\n st: %s\n\n",
+						   device->descURL, device->st);
+				}
+			} else if (!rootdescurl) {
+				printf("upnpDiscover() error code=%d\n", error);
+			}
+			i = 1;
+			if ((rootdescurl && UPNP_GetIGDFromUrl(rootdescurl, &urls, &data, lanaddr, sizeof(lanaddr)))
+				|| (i = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr)))) {
+				switch (i) {
+					case 1:
+						printf("Found valid IGD : %s\n", urls.controlURL);
+						break;
+					case 2:
+						printf("Found a (not connected?) IGD : %s\n", urls.controlURL);
+						printf("Trying to continue anyway\n");
+						break;
+					case 3:
+						printf("UPnP device found. Is it an IGD ? : %s\n", urls.controlURL);
+						printf("Trying to continue anyway\n");
+						break;
+					default:
+						printf("Found device (igd ?) : %s\n", urls.controlURL);
+						printf("Trying to continue anyway\n");
+				}
+				printf("Local LAN ip address : %s\n", lanaddr);
+#if 0
+                printf("getting \"%s\"\n", urls.ipcondescURL);
+                descXML = miniwget(urls.ipcondescURL, &descXMLsize);
+                if(descXML)
+                {
+                    /*fwrite(descXML, 1, descXMLsize, stdout);*/
+                    free(descXML); descXML = NULL;
+                }
+#endif
+
+				switch (command) {
+					case 'l':
+						DisplayInfos(&urls, &data);
+						ListRedirections(&urls, &data);
+						break;
+					case 'L':
+						NewListRedirections(&urls, &data);
+						break;
+					case 'a':
+						if (SetRedirectAndTest(&urls, &data,
+											   commandargv[0], commandargv[1],
+											   commandargv[2], commandargv[3],
+											   (commandargc > 4) ? commandargv[4] : "0",
+											   description, 0) < 0)
+							retcode = 2;
+						break;
+					case 'd':
+						if (RemoveRedirect(&urls, &data, commandargv[0], commandargv[1],
+										   commandargc > 2 ? commandargv[2] : NULL) < 0)
+							retcode = 2;
+						break;
+					case 'n':    /* aNy */
+						if (SetRedirectAndTest(&urls, &data,
+											   commandargv[0], commandargv[1],
+											   commandargv[2], commandargv[3],
+											   (commandargc > 4) ? commandargv[4] : "0",
+											   description, 1) < 0)
+							retcode = 2;
+						break;
+					case 'N':
+						if (commandargc < 3)
+							fprintf(stderr, "too few arguments\n");
+
+						if (RemoveRedirectRange(&urls, &data, commandargv[0], commandargv[1], commandargv[2],
+												commandargc > 3 ? commandargv[3] : NULL) < 0)
+							retcode = 2;
+						break;
+					case 's':
+						GetConnectionStatus(&urls, &data);
+						break;
+					case 'r':
+						i = 0;
+						while (i < commandargc) {
+							if (!is_int(commandargv[i])) {
+								/* 1st parameter not an integer : error */
+								fprintf(stderr, "command -r : %s is not an port number\n", commandargv[i]);
+								retcode = 1;
+								break;
+							} else if (is_int(commandargv[i + 1])) {
+								/* 2nd parameter is an integer : <port> <external_port> <protocol> */
+								if (SetRedirectAndTest(&urls, &data,
+													   lanaddr, commandargv[i],
+													   commandargv[i + 1], commandargv[i + 2], "0",
+													   description, 0) < 0)
+									retcode = 2;
+								i += 3;    /* 3 parameters parsed */
+							} else {
+								/* 2nd parameter not an integer : <port> <protocol> */
+								if (SetRedirectAndTest(&urls, &data,
+													   lanaddr, commandargv[i],
+													   commandargv[i], commandargv[i + 1], "0",
+													   description, 0) < 0)
+									retcode = 2;
+								i += 2;    /* 2 parameters parsed */
+							}
+						}
+						break;
+					case 'A':
+						SetPinholeAndTest(&urls, &data,
+										  commandargv[0], commandargv[1],
+										  commandargv[2], commandargv[3],
+										  commandargv[4], commandargv[5]);
+						break;
+					case 'U':
+						GetPinholeAndUpdate(&urls, &data,
+											commandargv[0], commandargv[1]);
+						break;
+					case 'C':
+						for (i = 0; i < commandargc; i++) {
+							CheckPinhole(&urls, &data, commandargv[i]);
+						}
+						break;
+					case 'K':
+						for (i = 0; i < commandargc; i++) {
+							GetPinholePackets(&urls, &data, commandargv[i]);
+						}
+						break;
+					case 'D':
+						for (i = 0; i < commandargc; i++) {
+							RemovePinhole(&urls, &data, commandargv[i]);
+						}
+						break;
+					case 'S':
+						GetFirewallStatus(&urls, &data);
+						break;
+					case 'G':
+						GetPinholeOutboundTimeout(&urls, &data,
+												  commandargv[0], commandargv[1],
+												  commandargv[2], commandargv[3],
+												  commandargv[4]);
+						break;
+					case 'P':
+						printf("Presentation URL found:\n");
+						printf("            %s\n", data.presentationurl);
+						break;
+					default:
+						fprintf(stderr, "Unknown switch -%c\n", command);
+						retcode = 1;
+				}
+
+				FreeUPNPUrls(&urls);
+			} else {
+				fprintf(stderr, "No valid UPNP Internet Gateway Device found.\n");
+				retcode = 1;
+			}
+			freeUPNPDevlist(devlist);
+			devlist = 0;
+		} else {
+			fprintf(stderr, "No IGD UPnP Device found on the network !\n");
+			retcode = 1;
+		}
+	} else {
+		struct UPNPDev *device;
 		struct UPNPUrls urls;
 		struct IGDdatas data;
-		if(devlist)
-		{
+		if (devlist) {
 			printf("List of UPNP devices found on the network :\n");
-			for(device = devlist; device; device = device->pNext)
-			{
+			for (device = devlist; device; device = device->pNext) {
 				printf(" desc: %s\n st: %s\n\n",
 					   device->descURL, device->st);
 			}
-		}
-		else if(!rootdescurl)
-		{
+		} else if (!rootdescurl) {
 			printf("upnpDiscover() error code=%d\n", error);
 		}
 		i = 1;
-		if( (rootdescurl && UPNP_GetIGDFromUrl(rootdescurl, &urls, &data, lanaddr, sizeof(lanaddr)))
-		  || (i = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr))))
-		{
-			switch(i) {
-			case 1:
-				printf("Found valid IGD : %s\n", urls.controlURL);
-				break;
-			case 2:
-				printf("Found a (not connected?) IGD : %s\n", urls.controlURL);
-				printf("Trying to continue anyway\n");
-				break;
-			case 3:
-				printf("UPnP device found. Is it an IGD ? : %s\n", urls.controlURL);
-				printf("Trying to continue anyway\n");
-				break;
-			default:
-				printf("Found device (igd ?) : %s\n", urls.controlURL);
-				printf("Trying to continue anyway\n");
+		if ((rootdescurl && UPNP_GetIGDFromUrl(rootdescurl, &urls, &data, lanaddr, sizeof(lanaddr)))
+			|| (i = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr)))) {
+			switch (i) {
+				case 1:
+					printf("Found valid IGD : %s\n", urls.controlURL);
+					break;
+				case 2:
+					printf("Found a (not connected?) IGD : %s\n", urls.controlURL);
+					printf("Trying to continue anyway\n");
+					break;
+				case 3:
+					printf("UPnP device found. Is it an IGD ? : %s\n", urls.controlURL);
+					printf("Trying to continue anyway\n");
+					break;
+				default:
+					printf("Found device (igd ?) : %s\n", urls.controlURL);
+					printf("Trying to continue anyway\n");
 			}
 			printf("Local LAN ip address : %s\n", lanaddr);
-			#if 0
-			printf("getting \"%s\"\n", urls.ipcondescURL);
-			descXML = miniwget(urls.ipcondescURL, &descXMLsize);
-			if(descXML)
-			{
-				/*fwrite(descXML, 1, descXMLsize, stdout);*/
-				free(descXML); descXML = NULL;
-			}
-			#endif
+#if 0
+            printf("getting \"%s\"\n", urls.ipcondescURL);
+            descXML = miniwget(urls.ipcondescURL, &descXMLsize);
+            if(descXML)
+            {
+            /*fwrite(descXML, 1, descXMLsize, stdout);*/
+            free(descXML); descXML = NULL;
+            }
+#endif
 
-			switch(command)
-			{
-			case 'l':
-				DisplayInfos(&urls, &data);
-				ListRedirections(&urls, &data);
-				break;
-			case 'L':
-				NewListRedirections(&urls, &data);
-				break;
-			case 'a':
-				if (SetRedirectAndTest(&urls, &data,
-						   commandargv[0], commandargv[1],
-						   commandargv[2], commandargv[3],
-						   (commandargc > 4)?commandargv[4]:"0",
-						   description, 0) < 0)
-					retcode = 2;
-				break;
-			case 'd':
-				if (RemoveRedirect(&urls, &data, commandargv[0], commandargv[1],
-				               commandargc > 2 ? commandargv[2] : NULL) < 0)
-					retcode = 2;
-				break;
-			case 'n':	/* aNy */
-				if (SetRedirectAndTest(&urls, &data,
-						   commandargv[0], commandargv[1],
-						   commandargv[2], commandargv[3],
-						   (commandargc > 4)?commandargv[4]:"0",
-						   description, 1) < 0)
-					retcode = 2;
-				break;
-			case 'N':
-				if (commandargc < 3)
-					fprintf(stderr, "too few arguments\n");
+			switch (command) {
+				case 'l':
+					DisplayInfos(&urls, &data);
+					ListRedirections(&urls, &data);
+					break;
+				case 'L':
+					NewListRedirections(&urls, &data);
+					break;
+				case 'a':
+					if (SetRedirectAndTest(&urls, &data,
+										   commandargv[0], commandargv[1],
+										   commandargv[2], commandargv[3],
+										   (commandargc > 4) ? commandargv[4] : "0",
+										   description, 0) < 0)
+						retcode = 2;
+					break;
+				case 'd':
+					if (RemoveRedirect(&urls, &data, commandargv[0], commandargv[1],
+									   commandargc > 2 ? commandargv[2] : NULL) < 0)
+						retcode = 2;
+					break;
+				case 'n':    /* aNy */
+					if (SetRedirectAndTest(&urls, &data,
+										   commandargv[0], commandargv[1],
+										   commandargv[2], commandargv[3],
+										   (commandargc > 4) ? commandargv[4] : "0",
+										   description, 1) < 0)
+						retcode = 2;
+					break;
+				case 'N':
+					if (commandargc < 3)
+						fprintf(stderr, "too few arguments\n");
 
-				if (RemoveRedirectRange(&urls, &data, commandargv[0], commandargv[1], commandargv[2],
-						    commandargc > 3 ? commandargv[3] : NULL) < 0)
-					retcode = 2;
-				break;
-			case 's':
-				GetConnectionStatus(&urls, &data);
-				break;
-			case 'r':
-				i = 0;
-				while(i<commandargc)
-				{
-					if(!is_int(commandargv[i])) {
-						/* 1st parameter not an integer : error */
-						fprintf(stderr, "command -r : %s is not an port number\n", commandargv[i]);
-						retcode = 1;
-						break;
-					} else if(is_int(commandargv[i+1])){
-						/* 2nd parameter is an integer : <port> <external_port> <protocol> */
-						if (SetRedirectAndTest(&urls, &data,
-								   lanaddr, commandargv[i],
-								   commandargv[i+1], commandargv[i+2], "0",
-								   description, 0) < 0)
-							retcode = 2;
-						i+=3;	/* 3 parameters parsed */
-					} else {
-						/* 2nd parameter not an integer : <port> <protocol> */
-						if (SetRedirectAndTest(&urls, &data,
-								   lanaddr, commandargv[i],
-								   commandargv[i], commandargv[i+1], "0",
-								   description, 0) < 0)
-							retcode = 2;
-						i+=2;	/* 2 parameters parsed */
+					if (RemoveRedirectRange(&urls, &data, commandargv[0], commandargv[1], commandargv[2],
+											commandargc > 3 ? commandargv[3] : NULL) < 0)
+						retcode = 2;
+					break;
+				case 's':
+					GetConnectionStatus(&urls, &data);
+					break;
+				case 'r':
+					i = 0;
+					while (i < commandargc) {
+						if (!is_int(commandargv[i])) {
+							/* 1st parameter not an integer : error */
+							fprintf(stderr, "command -r : %s is not an port number\n", commandargv[i]);
+							retcode = 1;
+							break;
+						} else if (is_int(commandargv[i + 1])) {
+							/* 2nd parameter is an integer : <port> <external_port> <protocol> */
+							if (SetRedirectAndTest(&urls, &data,
+												   lanaddr, commandargv[i],
+												   commandargv[i + 1], commandargv[i + 2], "0",
+												   description, 0) < 0)
+								retcode = 2;
+							i += 3;    /* 3 parameters parsed */
+						} else {
+							/* 2nd parameter not an integer : <port> <protocol> */
+							if (SetRedirectAndTest(&urls, &data,
+												   lanaddr, commandargv[i],
+												   commandargv[i], commandargv[i + 1], "0",
+												   description, 0) < 0)
+								retcode = 2;
+							i += 2;    /* 2 parameters parsed */
+						}
 					}
-				}
-				break;
-			case 'A':
-				SetPinholeAndTest(&urls, &data,
-				                  commandargv[0], commandargv[1],
-				                  commandargv[2], commandargv[3],
-				                  commandargv[4], commandargv[5]);
-				break;
-			case 'U':
-				GetPinholeAndUpdate(&urls, &data,
-				                   commandargv[0], commandargv[1]);
-				break;
-			case 'C':
-				for(i=0; i<commandargc; i++)
-				{
-					CheckPinhole(&urls, &data, commandargv[i]);
-				}
-				break;
-			case 'K':
-				for(i=0; i<commandargc; i++)
-				{
-					GetPinholePackets(&urls, &data, commandargv[i]);
-				}
-				break;
-			case 'D':
-				for(i=0; i<commandargc; i++)
-				{
-					RemovePinhole(&urls, &data, commandargv[i]);
-				}
-				break;
-			case 'S':
-				GetFirewallStatus(&urls, &data);
-				break;
-			case 'G':
-				GetPinholeOutboundTimeout(&urls, &data,
-							commandargv[0], commandargv[1],
-							commandargv[2], commandargv[3],
-							commandargv[4]);
-				break;
-			case 'P':
-				printf("Presentation URL found:\n");
-				printf("            %s\n", data.presentationurl);
-				break;
-			default:
-				fprintf(stderr, "Unknown switch -%c\n", command);
-				retcode = 1;
+					break;
+				case 'A':
+					SetPinholeAndTest(&urls, &data,
+									  commandargv[0], commandargv[1],
+									  commandargv[2], commandargv[3],
+									  commandargv[4], commandargv[5]);
+					break;
+				case 'U':
+					GetPinholeAndUpdate(&urls, &data,
+										commandargv[0], commandargv[1]);
+					break;
+				case 'C':
+					for (i = 0; i < commandargc; i++) {
+						CheckPinhole(&urls, &data, commandargv[i]);
+					}
+					break;
+				case 'K':
+					for (i = 0; i < commandargc; i++) {
+						GetPinholePackets(&urls, &data, commandargv[i]);
+					}
+					break;
+				case 'D':
+					for (i = 0; i < commandargc; i++) {
+						RemovePinhole(&urls, &data, commandargv[i]);
+					}
+					break;
+				case 'S':
+					GetFirewallStatus(&urls, &data);
+					break;
+				case 'G':
+					GetPinholeOutboundTimeout(&urls, &data,
+											  commandargv[0], commandargv[1],
+											  commandargv[2], commandargv[3],
+											  commandargv[4]);
+					break;
+				case 'P':
+					printf("Presentation URL found:\n");
+					printf("            %s\n", data.presentationurl);
+					break;
+				default:
+					fprintf(stderr, "Unknown switch -%c\n", command);
+					retcode = 1;
 			}
 
 			FreeUPNPUrls(&urls);
-		}
-		else
-		{
+		} else {
 			fprintf(stderr, "No valid UPNP Internet Gateway Device found.\n");
 			retcode = 1;
 		}
-		freeUPNPDevlist(devlist); devlist = 0;
-	}
-	else
-	{
-		fprintf(stderr, "No IGD UPnP Device found on the network !\n");
-		retcode = 1;
+		freeUPNPDevlist(devlist);
+		devlist = 0;
 	}
 #ifdef _WIN32
 	nResult = WSACleanup();

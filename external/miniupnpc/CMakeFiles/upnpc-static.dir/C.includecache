@@ -180,6 +180,8 @@ declspec.h
 igd_desc_parse.h
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/igd_desc_parse.h
 
+/home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/miniupnpcstrings.h
+
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/miniupnpctypes.h
 
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/miniwget.c
@@ -291,6 +293,8 @@ winsock2.h
 -
 netinet/in.h
 -
+ctype.h
+-
 miniwget.h
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/miniwget.h
 miniupnpc.h
@@ -299,6 +303,8 @@ upnpcommands.h
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/upnpcommands.h
 upnperrors.h
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/upnperrors.h
+miniupnpcstrings.h
+/home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/miniupnpcstrings.h
 
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/upnpcommands.c
 stdlib.h
@@ -355,6 +361,4 @@ bsdqueue.h
 /home/rainmanp7/PHF-Transfer/digitalnote-master/external/miniupnpc/bsdqueue.h
 sys/queue.h
 -
-
-miniupnpcstrings.h
 
