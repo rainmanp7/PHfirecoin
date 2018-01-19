@@ -2,6 +2,7 @@
 chacha-merged.c version 20080118
 D. J. Bernstein
 Public domain.
+Modified by rainmanp7
 */
 
 #include <memory.h>
@@ -36,13 +37,30 @@ Public domain.
   c = PLUS(c,d); b = ROTATE(XOR(b,c), 7);
 
 static const char sigma[] = "expand 32-byte k";
+//-------moved the int i here to be in use of before the void of the rest
+int i;
 
 void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t* key, const uint8_t* iv, char* cipher) {
   uint32_t x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15;
   uint32_t j0, j1, j2, j3, j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15;
   char* ctarget = 0;
   char tmp[64];
-  int i;
+  
+
+//----------------------------
+
+//unused variable i
+//#define i = 0;
+//__i__((unused));
+
+
+
+
+
+//---------
+//orginal -> int i;
+
+//------------------------------
 
   if (!length) return;
 
@@ -102,7 +120,8 @@ void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t*
 //   for (i = 0; i < doubleRounds; i++) {
 
 
-
+ 
+//----------
    for (unsigned int i = 0; i < doubleRounds; i++) {
       QUARTERROUND( x0, x4, x8,x12)
       QUARTERROUND( x1, x5, x9,x13)
