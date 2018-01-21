@@ -2,20 +2,17 @@
 chacha-merged.c version 20080118
 D. J. Bernstein
 Public domain.
-Modified by rainmanp7
 */
 
 #include <memory.h>
 #include <stdio.h>
-#include <sys/param.h>
-
 #include "chacha.h"
 #include "Common/int-util.h"
 
 /*
  * The following macros are used to obtain exact-width results.
  */
-#define U8V(v) ((uint8_t)(v) & UINT8_C(0xFF))
+//#define U8V(v) ((uint8_t)(v) & UINT8_C(0xFF))
 #define U32V(v) ((uint32_t)(v) & UINT32_C(0xFFFFFFFF))
 
 /*
@@ -31,13 +28,13 @@ Modified by rainmanp7
 #define PLUSONE(v) (PLUS((v),1))
 
 #define QUARTERROUND(a,b,c,d) \
-  a = PLUS(a,b); d = ROTATE(XOR(d,a),16); \
-  c = PLUS(c,d); b = ROTATE(XOR(b,c),12); \
-  a = PLUS(a,b); d = ROTATE(XOR(d,a), 8); \
-  c = PLUS(c,d); b = ROTATE(XOR(b,c), 7);
+  a = PLUS(a,b); (d) = ROTATE(XOR(d,a),16); \
+  (c) = PLUS(c,d); (b) = ROTATE(XOR(b,c),12); \
+  (a) = PLUS(a,b); (d) = ROTATE(XOR(d,a), 8); \
+  (c) = PLUS(c,d); (b) = ROTATE(XOR(b,c), 7);
 
 static const char sigma[] = "expand 32-byte k";
-//-------moved the int i here to be in use of before the void of the rest
+
 int i;
 
 void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t* key, const uint8_t* iv, char* cipher) {
@@ -45,22 +42,8 @@ void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t*
   uint32_t j0, j1, j2, j3, j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15;
   char* ctarget = 0;
   char tmp[64];
-  
-
-//----------------------------
-
-//unused variable i
-//#define i = 0;
-//__i__((unused));
-
-
-
-
-
-//---------
-//orginal -> int i;
-
-//------------------------------
+ //--rainmanp7 default location
+    // int i;
 
   if (!length) return;
 
@@ -120,8 +103,7 @@ void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t*
 //   for (i = 0; i < doubleRounds; i++) {
 
 
- 
-//----------
+
    for (unsigned int i = 0; i < doubleRounds; i++) {
       QUARTERROUND( x0, x4, x8,x12)
       QUARTERROUND( x1, x5, x9,x13)
