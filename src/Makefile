@@ -4606,6 +4606,33 @@ crypto/chacha.c.s:
 	cd /home/rainmanp7/PHF-Transfer/digitalnote-master && $(MAKE) -f src/CMakeFiles/Crypto.dir/build.make src/CMakeFiles/Crypto.dir/crypto/chacha.c.s
 .PHONY : crypto/chacha.c.s
 
+crypto/cn_context.o: crypto/cn_context.cpp.o
+
+.PHONY : crypto/cn_context.o
+
+# target to build an object file
+crypto/cn_context.cpp.o:
+	cd /home/rainmanp7/PHF-Transfer/digitalnote-master && $(MAKE) -f src/CMakeFiles/Crypto.dir/build.make src/CMakeFiles/Crypto.dir/crypto/cn_context.cpp.o
+.PHONY : crypto/cn_context.cpp.o
+
+crypto/cn_context.i: crypto/cn_context.cpp.i
+
+.PHONY : crypto/cn_context.i
+
+# target to preprocess a source file
+crypto/cn_context.cpp.i:
+	cd /home/rainmanp7/PHF-Transfer/digitalnote-master && $(MAKE) -f src/CMakeFiles/Crypto.dir/build.make src/CMakeFiles/Crypto.dir/crypto/cn_context.cpp.i
+.PHONY : crypto/cn_context.cpp.i
+
+crypto/cn_context.s: crypto/cn_context.cpp.s
+
+.PHONY : crypto/cn_context.s
+
+# target to generate assembly for a file
+crypto/cn_context.cpp.s:
+	cd /home/rainmanp7/PHF-Transfer/digitalnote-master && $(MAKE) -f src/CMakeFiles/Crypto.dir/build.make src/CMakeFiles/Crypto.dir/crypto/cn_context.cpp.s
+.PHONY : crypto/cn_context.cpp.s
+
 crypto/crypto-ops-data.o: crypto/crypto-ops-data.c.o
 
 .PHONY : crypto/crypto-ops-data.o
@@ -5559,6 +5586,9 @@ help:
 	@echo "... crypto/chacha.o"
 	@echo "... crypto/chacha.i"
 	@echo "... crypto/chacha.s"
+	@echo "... crypto/cn_context.o"
+	@echo "... crypto/cn_context.i"
+	@echo "... crypto/cn_context.s"
 	@echo "... crypto/crypto-ops-data.o"
 	@echo "... crypto/crypto-ops-data.i"
 	@echo "... crypto/crypto-ops-data.s"
