@@ -27,9 +27,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * ---------------------------------------------------------------------------
  */
+//--appplied if def fix for unknown usage _NR and endif at the statement close
+#ifdef _NR
 static const char _NR[] = {
 	0x4e,0x61,0x62,0x69,0x6c,0x20,0x53,0x2e,0x20,
 	0x41,0x6c,0x20,0x52,0x61,0x6d,0x6c,0x69,0x00 };
+#endif
 
 #include <stddef.h>
 #include <time.h> 
@@ -41,16 +44,17 @@ static const char _NR[] = {
 #endif
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
+// unused import statement
+//#include <stdio.h>
 
 #ifdef WIN32
 #include <process.h>
 #else
-#include <sys/types.h>
+//#include <sys/types.h>
 #include <unistd.h>
 #endif
 
-#include "oaes_config.h"
+//#include "oaes_config.h"
 #include "oaes_lib.h"
 
 #ifdef OAES_HAVE_ISAAC
