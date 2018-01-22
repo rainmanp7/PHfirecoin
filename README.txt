@@ -4,6 +4,8 @@
 ## Testing Deamon & Simple-Wallet
 
 Current known testing errors:
+IF you fork this program ,and come across some unknown type of text? Please search it out as text in google or the Linux repository. There may be a missing dependency that you need installed ,and it's probably going to be named the same or close to the name of that missing dependency.
+
 When deamon first comes up it will be fine
 Then you will see it try to connect to a real seed node ,but it will just give handshake error because it's on a different network.
 That is a normal responce.
