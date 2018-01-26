@@ -3,6 +3,9 @@
 ## at Ducknote/Darknote/Digital Note.
 ## Testing Deamon & Simple-Wallet
 
+The Daemon is undergoing heavy upgrades to the base system ,because the work done ,was so promissing. We decided to greatly improve the base run quality at this time.
+Much Error and warnings removed and underlying problems that coukd creep up are being gone over in great detail.
+
 Current known testing errors:
 IF you fork this program ,and come across some unknown type of text? Please search it out as text in google or the Linux repository. There may be a missing dependency that you need installed ,and it's probably going to be named the same or close to the name of that missing dependency.
 
