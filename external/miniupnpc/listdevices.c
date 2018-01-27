@@ -1,3 +1,9 @@
+/* $Id: listdevices.c,v 1.6 2015/07/23 20:40:08 nanard Exp $ */
+/* Project : miniupnp
+ * Author : Thomas Bernard
+ * Copyright (c) 2013-2015 Thomas Bernard
+ * This software is subject to the conditions detailed in the
+ * LICENCE file provided in this distribution. */
 
 #include <stdio.h>
 #include <string.h>

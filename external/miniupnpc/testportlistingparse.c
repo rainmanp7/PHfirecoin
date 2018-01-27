@@ -1,3 +1,11 @@
+/* $Id: testportlistingparse.c,v 1.2 2014/11/01 10:37:32 nanard Exp $ */
+/* Project : miniupnp
+ * http://miniupnp.free.fr/ or http://miniupnp.tuxfamily.org/
+ * Author : Thomas Bernard
+ * Copyright (c) 2014 Thomas Bernard
+ * This software is subject to the conditions detailed in the
+ * LICENCE file provided in this distribution.
+ * */
 
 #include <string.h>
 #include <stdio.h>
