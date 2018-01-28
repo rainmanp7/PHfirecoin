@@ -49,7 +49,8 @@ namespace CryptoNote {
     getBlockHeight(startBlockId, startBlockHeight);
 
     std::vector<Crypto::Hash> result;
-    size_t sparseChainEnd = static_cast<size_t>(startBlockHeight + 1);
+    size_t sparseChainEnd;
+    sparseChainEnd = static_cast<size_t>(startBlockHeight + 1);
     for (size_t i = 1; i <= sparseChainEnd; i *= 2) {
       result.emplace_back(m_container[sparseChainEnd - i]);
     }
