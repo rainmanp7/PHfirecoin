@@ -9,7 +9,7 @@
 #include <functional>
 #include <queue>
 #include <stack>
-
+#include "../src/Common/basic_string.h"
 namespace System {
 
 struct NativeContextGroup;
