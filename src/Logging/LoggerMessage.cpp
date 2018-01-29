@@ -37,7 +37,6 @@ LoggerMessage::LoggerMessage(LoggerMessage&& other)
   this->set_rdbuf(this);
 }
 #else
-
 LoggerMessage::LoggerMessage(LoggerMessage&& other)
   : std::ostream(nullptr)
   , std::streambuf()
@@ -64,7 +63,7 @@ LoggerMessage::LoggerMessage(LoggerMessage&& other)
 
     //streambuf swap
     char *_Pfirst = pbase();
-    //char *_PNext = pptr();
+    char *_Pnext = pptr();
     char *_Pend = epptr();
     char *_Gfirst = eback();
     char *_Gnext = gptr();
