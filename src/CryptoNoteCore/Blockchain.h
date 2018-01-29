@@ -5,6 +5,18 @@
 
 #pragma once
 
+#include <algorithm>
+#include <cstdio>
+#include <boost/foreach.hpp>
+#include "Common/Math.h"
+#include "Common/ShuffleGenerator.h"
+#include "Common/StdInputStream.h"
+#include "Common/StdOutputStream.h"
+#include "Rpc/CoreRpcServerCommandsDefinitions.h"
+#include "Serialization/BinarySerializationTools.h"
+#include "CryptoNoteTools.h"
+
+
 #include <atomic>
 
 #include "google/sparse_hash_set"

@@ -5,16 +5,6 @@
 
 #include "Blockchain.h"
 
-#include <algorithm>
-#include <cstdio>
-#include <boost/foreach.hpp>
-#include "Common/Math.h"
-#include "Common/ShuffleGenerator.h"
-#include "Common/StdInputStream.h"
-#include "Common/StdOutputStream.h"
-#include "Rpc/CoreRpcServerCommandsDefinitions.h"
-#include "Serialization/BinarySerializationTools.h"
-#include "CryptoNoteTools.h"
 
 using namespace Logging;
 using namespace Common;
@@ -1708,7 +1698,8 @@ bool Blockchain::getBlockCumulativeSize(const Block& block, size_t& cumulativeSi
 // Precondition: m_blockchain_lock is locked.
 bool Blockchain::update_next_comulative_size_limit() {
   size_t blockGrantedFullRewardZone =
-    get_block_major_version_for_height(getCurrentBlockchainHeight());
+    get_block_major_version_for_height(getCurrentBlockchainHeight()) < parameters::UPGRADE_HEIGHT_V4 ?
+    parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1 :
     m_currency.blockGrantedFullRewardZone();
 
   std::vector<size_t> sz;
