@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.6)
+cmake_minimum_required(VERSION 3.10)
 
 set(VERSION "0.1")
 # Packaged from commit 1febccfaee880955ac5acab479fc0e3c6f3aa7c6
