@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required(VERSION 3.10.2)
 
-set(VERSION "0.1")
+set(VERSION "4.5")
 # Packaged from commit 1febccfaee880955ac5acab479fc0e3c6f3aa7c6
 set(COMMIT 1febccfae)
 set(REFS " (HEAD -> master, tag: v4.0.3-beta)")
@@ -101,7 +101,6 @@ else()
 #Don't set this to off unless you want to see allot of errors.
 
 set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto")
-
 
   endif()
   #if(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND NOT MINGW)
