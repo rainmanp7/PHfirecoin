@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.10.2)
+﻿cmake_minimum_required(VERSION 3.9)
 
 set(VERSION "4.5")
 # Packaged from commit 1febccfaee880955ac5acab479fc0e3c6f3aa7c6
