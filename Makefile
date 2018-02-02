@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/rainmanp7/PHF-Transfer/PHF-master
+CMAKE_SOURCE_DIR = /home/rainmanp7/PHF-Transfer/phf.vision
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/rainmanp7/PHF-Transfer/PHF-master
+CMAKE_BINARY_DIR = /home/rainmanp7/PHF-Transfer/phf.vision
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -91,9 +91,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rainmanp7/PHF-Transfer/PHF-master/CMakeFiles /home/rainmanp7/PHF-Transfer/PHF-master/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rainmanp7/PHF-Transfer/phf.vision/CMakeFiles /home/rainmanp7/PHF-Transfer/phf.vision/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rainmanp7/PHF-Transfer/PHF-master/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rainmanp7/PHF-Transfer/phf.vision/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
