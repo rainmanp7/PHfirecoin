@@ -1,0 +1,45 @@
+You will copy the daemon file here and simple wallet.
+
+then in folder testnet2
+you will copy just the daemon there.
+
+It will look like this
+
+--testnet1
+-------phfired
+-------simplewallet
+
+--testnet2
+-------phfired
+
+You will first execute the following command 
+to fire up the first daemon. This will get things started.
+
+./phfired --p2p-bind-port=28080 --rpc-bind-port=42081 --allow-local-ip
+
+You will then go to the 2nd folder and start up the 2nd daemon to sync the network.
+You will use this command to do so.
+
+./phfired --p2p-bind-port=5011 --rpc-bind-port=5010 --add-peer 0.0.0.0:28080 --allow-local-ip
+
+Then after it's synced and you see it comes across the sceeen as if it's seeded.
+
+Now you can start the simplewallet from the first folder.
+create a wallet for testing
+name = test
+password = test
+
+once the simple wallet starts up... your ready for the command inside the wallet.
+start_mining
+
+after you watch it mine some blocks? 
+you can simply reverse shut down in this order.
+=======================================================
+Shutdown sequence
+
+exit command on wallet
+exit command on daemon from folder testnet2
+exit command on daemon from folder testnet1
+
+and that's it.
+to restart? testnet1 then testnet2 then simplewallet.
