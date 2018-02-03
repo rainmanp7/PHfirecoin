@@ -3,14 +3,7 @@
 ## at Ducknote/Darknote/Digital Note.
 
 The Daemon is undergoing heavy upgrades to the base system ,because the work done ,was so promissing. We decided to greatly improve the base run quality at this time.
-Much Error and warnings removed and underlying problems that coukd creep up are being gone over in great detail.
-
-Current known testing errors:
-IF you fork this program ,and come across some unknown type of text? Please search it out as text in google or the Linux repository. There may be a missing dependency that you need installed ,and it's probably going to be named the same or close to the name of that missing dependency.
-
-When deamon first comes up it will be fine
-Then you will see it try to connect to a real seed node ,but it will just give handshake error because it's on a different network.
-That is a normal responce.
+Much Error and warnings removed and underlying problems that could creep up are being gone over in great detail.
 
 Website:
 http://www.phfirecoin.com
@@ -20,7 +13,6 @@ https://discord.gg/hzuRz43
 
 Twitter:
 @phfirecoin
-
 
 ### Building on Linux:
 Your source files will be built in a directory
@@ -52,6 +44,23 @@ Alternatively, it may be possible to install them using a package manager.
 To build, change to a directory where this file is located, and run `make`. The resulting executables can be found in `build/release/src`.
 
 #### Advanced options:
+Install Gcc and gcc7 after which you would install the cmake 9 or 10.
+After this is completed , you would install boost with no special anything.
+
+Building Boost from source code:
+Download the tar.gz file qnd extract.
+Move the folder to the main user area.
+Go inside the folder and execute the following ,one by one commands to build boost 1.55...
+./bootstrap.sh
+Then ./b2
+Then ./b2 install
+
+After this is completed ,gcc and gcc7 and cmake and then boost is all installed.
+You then go into the folder to build the coun programs from source code.
+
+make cmakelists.txt
+Then if all is well..
+make or make -j3 the number 3 being the cores you will use to build the program.
 
 Parallel build: run `make -j<number of threads>` instead of `make`.
 
