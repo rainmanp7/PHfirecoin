@@ -1,7 +1,6 @@
 ## Coin Name = PHfirecoin.
 ## Based and forked from the great people
 ## at Ducknote/Darknote/Digital Note.
-## Testing Deamon & Simple-Wallet
 
 The Daemon is undergoing heavy upgrades to the base system ,because the work done ,was so promissing. We decided to greatly improve the base run quality at this time.
 Much Error and warnings removed and underlying problems that coukd creep up are being gone over in great detail.
