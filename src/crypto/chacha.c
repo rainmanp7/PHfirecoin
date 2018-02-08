@@ -6,13 +6,15 @@ Public domain.
 
 #include <memory.h>
 #include <stdio.h>
+#include <sys/param.h>
+
 #include "chacha.h"
 #include "Common/int-util.h"
 
 /*
  * The following macros are used to obtain exact-width results.
  */
-//#define U8V(v) ((uint8_t)(v) & UINT8_C(0xFF))
+#define U8V(v) ((uint8_t)(v) & UINT8_C(0xFF))
 #define U32V(v) ((uint32_t)(v) & UINT32_C(0xFFFFFFFF))
 
 /*
@@ -28,22 +30,19 @@ Public domain.
 #define PLUSONE(v) (PLUS((v),1))
 
 #define QUARTERROUND(a,b,c,d) \
-  a = PLUS(a,b); (d) = ROTATE(XOR(d,a),16); \
-  (c) = PLUS(c,d); (b) = ROTATE(XOR(b,c),12); \
-  (a) = PLUS(a,b); (d) = ROTATE(XOR(d,a), 8); \
-  (c) = PLUS(c,d); (b) = ROTATE(XOR(b,c), 7);
+  a = PLUS(a,b); d = ROTATE(XOR(d,a),16); \
+  c = PLUS(c,d); b = ROTATE(XOR(b,c),12); \
+  a = PLUS(a,b); d = ROTATE(XOR(d,a), 8); \
+  c = PLUS(c,d); b = ROTATE(XOR(b,c), 7);
 
 static const char sigma[] = "expand 32-byte k";
-
-int i;
 
 void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t* key, const uint8_t* iv, char* cipher) {
   uint32_t x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15;
   uint32_t j0, j1, j2, j3, j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15;
   char* ctarget = 0;
   char tmp[64];
- //--rainmanp7 default location
-    // int i;
+  int i;
 
   if (!length) return;
 
@@ -87,24 +86,7 @@ void chacha(size_t doubleRounds, const void* data, size_t length, const uint8_t*
     x13 = j13;
     x14 = j14;
     x15 = j15;
-
-//Example aplicable testing that could actually work.
-//for (unsigned int i = 0; i < sizeof(r)/sizeof(r[0]); ++i ){ 
-//        r[i]= 0; 
-///}
-
-// Error prone example
-//for ( i= 0; i < sizeof(r)/sizeof(r[0]); ++i ){ 
-//        r[i]= 0; 
-//}
-//rainmanp7 turned the i into an unassigned vary for the loop 01-16-2018
-
-//original code
-//   for (i = 0; i < doubleRounds; i++) {
-
-
-
-   for (unsigned int i = 0; i < doubleRounds; i++) {
+    for (i = 0; i < doubleRounds; i++) {
       QUARTERROUND( x0, x4, x8,x12)
       QUARTERROUND( x1, x5, x9,x13)
       QUARTERROUND( x2, x6,x10,x14)
