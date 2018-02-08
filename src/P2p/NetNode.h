@@ -1,17 +1,39 @@
-// Copyright (c) 2011-2017 The Cryptonote developers
-// Copyright (c) 2014-2017 XDN developers
-// Copyright (c) 2016-2017 BXC developers
-// Copyright (c) 2017 UltraNote developers
+// Copyright (c) 2011-2016 The Cryptonote developers
+// Copyright (c) 2014-2017 XDN-project developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #pragma once
-
+#include <algorithm>
+#include <fstream>
+#include <boost/foreach.hpp>
+#include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/utility/value_init.hpp>
+#include <miniupnpc/miniupnpc.h>
+#include <miniupnpc/upnpcommands.h>
+#include <System/Context.h>
+#include <System/ContextGroupTimeout.h>
+#include <System/EventLock.h>
+#include <System/InterruptedException.h>
+#include <System/Ipv4Address.h>
+#include <System/Ipv4Resolver.h>
+#include <System/TcpListener.h>
+#include <System/TcpConnector.h>
+#include "version.h"
+#include "Common/StdInputStream.h"
+#include "Common/StdOutputStream.h"
+#include "Common/Util.h"
+#include "crypto/crypto.h"
+#include "ConnectionContext.h"
+#include "LevinProtocol.h"
+#include "P2pProtocolDefinitions.h"
+#include "Serialization/BinaryInputStreamSerializer.h"
+#include "Serialization/BinaryOutputStreamSerializer.h"
+#include "Serialization/SerializationOverloads.h"
 #include <functional>
 #include <unordered_map>
-
 #include <boost/functional/hash.hpp>
-
 #include <System/Context.h>
 #include <System/ContextGroup.h>
 #include <System/Dispatcher.h>
@@ -19,12 +41,10 @@
 #include <System/Timer.h>
 #include <System/TcpConnection.h>
 #include <System/TcpListener.h>
-
 #include "CryptoNoteCore/OnceInInterval.h"
 #include "CryptoNoteProtocol/CryptoNoteProtocolHandler.h"
 #include "Common/CommandLine.h"
 #include "Logging/LoggerRef.h"
-
 #include "ConnectionContext.h"
 #include "LevinProtocol.h"
 #include "NetNodeCommon.h"
