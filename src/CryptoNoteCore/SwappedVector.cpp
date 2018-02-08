@@ -5,12 +5,10 @@
 
 #include "SwappedVector.h"
 
-
+//rainmanp7
+#ifdef _WIN32
 namespace {
-//char suppressMSVCWarningLNK4221;
-}
-
-//Super nullify
-//int var;    // var is not used
-//(void)var;  // null statement, cast to void -- suppresses warning
+    char suppressMSVCWarningLNK4221;
+};
+#endif
 

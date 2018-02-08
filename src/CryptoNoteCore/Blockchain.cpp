@@ -5,6 +5,16 @@
 
 #include "Blockchain.h"
 
+#include <algorithm>
+#include <cstdio>
+#include <boost/foreach.hpp>
+#include "Common/Math.h"
+#include "Common/ShuffleGenerator.h"
+#include "Common/StdInputStream.h"
+#include "Common/StdOutputStream.h"
+#include "Rpc/CoreRpcServerCommandsDefinitions.h"
+#include "Serialization/BinarySerializationTools.h"
+#include "CryptoNoteTools.h"
 
 using namespace Logging;
 using namespace Common;
@@ -300,10 +310,7 @@ m_currency(currency),
 m_tx_pool(tx_pool),
 m_current_block_cumul_sz_limit(0),
 m_is_in_checkpoint_zone(false),
-m_checkpoints(logger),
-m_upgradeDetectorV2(currency, m_blocks, BLOCK_MAJOR_VERSION_2, logger),
-m_upgradeDetectorV3(currency, m_blocks, BLOCK_MAJOR_VERSION_3, logger),
-m_upgradeDetectorV4(currency, m_blocks, BLOCK_MAJOR_VERSION_4, logger) {
+m_checkpoints(logger) {
 
   m_outputs.set_deleted_key(0);
   m_multisignatureOutputs.set_deleted_key(0);
@@ -441,20 +448,6 @@ bool Blockchain::init(const std::string& config_folder, bool load_existing) {
     }
   }
 
-  if (!m_upgradeDetectorV2.init()) {
-    logger(ERROR, BRIGHT_RED) << "Failed to initialize upgrade detector";
-    return false;
-  }
-
-  if (!m_upgradeDetectorV3.init()) {
-    logger(ERROR, BRIGHT_RED) << "Failed to initialize upgrade detector";
-    return false;
-  }
-
-  if (!m_upgradeDetectorV4.init()) {
-    logger(ERROR, BRIGHT_RED) << "Failed to initialize upgrade detector";
-    return false;
-  }
 
   update_next_comulative_size_limit();
 
@@ -692,15 +685,7 @@ difficulty_type Blockchain::difficultyAtHeight(uint64_t height) {
 }
 
 uint8_t Blockchain::get_block_major_version_for_height(uint64_t height) const {
-  if (height > m_upgradeDetectorV4.upgradeHeight()) {
-    return m_upgradeDetectorV4.targetVersion();
-  } else if (height > m_upgradeDetectorV3.upgradeHeight()) {
-    return m_upgradeDetectorV3.targetVersion();
-  } else if (height > m_upgradeDetectorV2.upgradeHeight()) {
-    return m_upgradeDetectorV2.targetVersion();
-  } else {
     return BLOCK_MAJOR_VERSION_1;
-  }
 }
 
 bool Blockchain::rollback_blockchain_switching(std::list<Block> &original_chain, size_t rollback_height) {
@@ -1698,7 +1683,7 @@ bool Blockchain::getBlockCumulativeSize(const Block& block, size_t& cumulativeSi
 // Precondition: m_blockchain_lock is locked.
 bool Blockchain::update_next_comulative_size_limit() {
   size_t blockGrantedFullRewardZone =
-    get_block_major_version_for_height(getCurrentBlockchainHeight()) < parameters::UPGRADE_HEIGHT_V4 ?
+    get_block_major_version_for_height(getCurrentBlockchainHeight())< parameters::UPGRADE_HEIGHT_V4 ?
     parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1 :
     m_currency.blockGrantedFullRewardZone();
 
@@ -1941,12 +1926,7 @@ bool Blockchain::pushBlock(const Block& blockData, const std::vector<Transaction
     << ", " << block_processing_time << "(" << target_calculating_time << "/" << longhash_calculating_time << ")ms";
 
   bvc.m_added_to_main_chain = true;
-
-  m_upgradeDetectorV2.blockPushed();
-  m_upgradeDetectorV3.blockPushed();
-  m_upgradeDetectorV4.blockPushed();
   update_next_comulative_size_limit();
-
   return true;
 }
     
@@ -2032,9 +2012,6 @@ void Blockchain::popBlock(const Crypto::Hash& blockHash) {
 
   assert(m_blockIndex.size() == m_blocks.size());
 
-  m_upgradeDetectorV2.blockPopped();
-  m_upgradeDetectorV3.blockPopped();
-  m_upgradeDetectorV4.blockPopped();
 }
 
 bool Blockchain::pushTransaction(BlockEntry& block, const Crypto::Hash& transactionHash, TransactionIndex transactionIndex) {

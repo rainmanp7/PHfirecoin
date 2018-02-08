@@ -4,7 +4,10 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "SwappedMap.h"
-
+//rainmanp7
+#ifdef _WIN32
 namespace {
-//char suppressMSVCWarningLNK4221;
-}
+    char suppressMSVCWarningLNK4221;
+};
+#endif
+

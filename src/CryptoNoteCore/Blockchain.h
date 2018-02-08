@@ -5,18 +5,6 @@
 
 #pragma once
 
-#include <algorithm>
-#include <cstdio>
-#include <boost/foreach.hpp>
-#include "Common/Math.h"
-#include "Common/ShuffleGenerator.h"
-#include "Common/StdInputStream.h"
-#include "Common/StdOutputStream.h"
-#include "Rpc/CoreRpcServerCommandsDefinitions.h"
-#include "Serialization/BinarySerializationTools.h"
-#include "CryptoNoteTools.h"
-
-
 #include <atomic>
 
 #include "google/sparse_hash_set"
@@ -34,12 +22,9 @@
 #include "CryptoNoteCore/CryptoNoteFormatUtils.h"
 #include "CryptoNoteCore/TransactionPool.h"
 #include "CryptoNoteCore/BlockchainIndices.h"
-#include "CryptoNoteCore/UpgradeDetector.h"
-
 #include "CryptoNoteCore/MessageQueue.h"
 #include "CryptoNoteCore/BlockchainMessages.h"
 #include "CryptoNoteCore/IntrusiveLinkedList.h"
-
 #include <Logging/LoggerRef.h>
 
 #undef ERROR
@@ -258,7 +243,6 @@ namespace CryptoNote {
     typedef SwappedVector<BlockEntry> Blocks;
     typedef std::unordered_map<Crypto::Hash, uint32_t> BlockMap;
     typedef std::unordered_map<Crypto::Hash, TransactionIndex> TransactionMap;
-    typedef BasicUpgradeDetector<Blocks> UpgradeDetector;
 
     friend class BlockCacheSerializer;
     friend class BlockchainIndicesSerializer;
@@ -268,9 +252,6 @@ namespace CryptoNote {
     CryptoNote::DepositIndex m_depositIndex;
     TransactionMap m_transactionMap;
     MultisignatureOutputsContainer m_multisignatureOutputs;
-    UpgradeDetector m_upgradeDetectorV2;
-    UpgradeDetector m_upgradeDetectorV3;
-    UpgradeDetector m_upgradeDetectorV4;
 
     PaymentIdIndex m_paymentIdIndex;
     TimestampBlocksIndex m_timestampIndex;

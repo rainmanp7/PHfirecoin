@@ -312,17 +312,11 @@ bool core::get_block_template(Block& b, const AccountPublicAddress& adr, difficu
       logger(ERROR, BRIGHT_RED) << "difficulty overhead.";
       return false;
     }
-
+    {
     b = boost::value_initialized<Block>();
     b.majorVersion = m_blockchain.get_block_major_version_for_height(height);
 
-    if (b.majorVersion < BLOCK_MAJOR_VERSION_3) {
-      if (b.majorVersion == BLOCK_MAJOR_VERSION_1) {
-        b.minorVersion = m_currency.upgradeHeight(BLOCK_MAJOR_VERSION_2) == UpgradeDetectorBase::UNDEF_HEIGHT ? BLOCK_MINOR_VERSION_1 : BLOCK_MINOR_VERSION_0;
-      } else {
-        b.minorVersion = m_currency.upgradeHeight(BLOCK_MAJOR_VERSION_3) == UpgradeDetectorBase::UNDEF_HEIGHT ? BLOCK_MINOR_VERSION_1 : BLOCK_MINOR_VERSION_0;
-      }
-    } else {
+
       b.minorVersion = BLOCK_MINOR_VERSION_0;
       b.rootBlock.majorVersion = BLOCK_MAJOR_VERSION_1;
       b.rootBlock.minorVersion = BLOCK_MINOR_VERSION_0;

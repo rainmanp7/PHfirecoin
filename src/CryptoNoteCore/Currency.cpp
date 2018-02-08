@@ -4,19 +4,6 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "Currency.h"
-#include <cctype>
-#include <boost/algorithm/string/trim.hpp>
-#include <boost/lexical_cast.hpp>
-#include "../Common/Base58.h"
-#include "../Common/int-util.h"
-#include "../Common/StringTools.h"
-
-#include "Account.h"
-#include "CryptoNoteBasicImpl.h"
-#include "CryptoNoteFormatUtils.h"
-#include "CryptoNoteTools.h"
-#include "TransactionExtra.h"
-#include "UpgradeDetector.h"
 
 #undef ERROR
 
@@ -60,9 +47,6 @@ bool Currency::init() {
   }
 
   if (isTestnet()) {
-    m_upgradeHeightV2 = 0;
-    m_upgradeHeightV3 = static_cast<uint32_t>(-1);
-    m_upgradeHeightV4 = static_cast<uint32_t>(-1);
     m_blocksFileName = "testnet_" + m_blocksFileName;
     m_blocksCacheFileName = "testnet_" + m_blocksCacheFileName;
     m_blockIndexesFileName = "testnet_" + m_blockIndexesFileName;
@@ -109,24 +93,8 @@ uint64_t Currency::baseRewardFunction(uint64_t alreadyGeneratedCoins, uint32_t h
 }
 
 size_t Currency::blockGrantedFullRewardZoneByBlockVersion(uint8_t blockMajorVersion) const {
-  if (blockMajorVersion >= BLOCK_MAJOR_VERSION_4) {
-    return m_blockGrantedFullRewardZone;
-  } else {
     return CryptoNote::parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1;
   }
-}
-
-uint32_t Currency::upgradeHeight(uint8_t majorVersion) const {
-  if (majorVersion == BLOCK_MAJOR_VERSION_2) {
-    return m_upgradeHeightV2;
-  } else if (majorVersion == BLOCK_MAJOR_VERSION_3) {
-    return m_upgradeHeightV3;
-  } else if (majorVersion == BLOCK_MAJOR_VERSION_4) {
-    return m_upgradeHeightV4;
-  } else {
-    return static_cast<uint32_t>(-1);
-  }
-}
 
 bool Currency::getBlockReward(size_t medianSize, size_t currentBlockSize, uint64_t alreadyGeneratedCoins,
   uint64_t fee, uint32_t height, uint64_t& reward, int64_t& emissionChange) const {
@@ -236,7 +204,7 @@ uint64_t Currency::getTransactionFee(const Transaction& tx) const {
 
 size_t Currency::maxBlockCumulativeSize(uint64_t height) const {
   assert(height <= std::numeric_limits<uint64_t>::max() / m_maxBlockSizeGrowthSpeedNumerator);
-  size_t maxSize = static_cast<size_t>(m_maxBlockSizeInitial +
+  auto maxSize = static_cast<size_t>(m_maxBlockSizeInitial +
     (height * m_maxBlockSizeGrowthSpeedNumerator) / m_maxBlockSizeGrowthSpeedDenominator);
   assert(maxSize >= m_maxBlockSizeInitial);
   return maxSize;
@@ -257,7 +225,7 @@ bool Currency::constructMinerTx(uint32_t height, size_t medianSize, uint64_t alr
     }
   }
 
-  BaseInput in;
+  BaseInput in{};
   in.blockIndex = height;
 
   uint64_t blockReward;
@@ -302,7 +270,7 @@ bool Currency::constructMinerTx(uint32_t height, size_t medianSize, uint64_t alr
       return false;
     }
 
-    KeyOutput tk;
+    KeyOutput tk{};
     tk.key = outEphemeralPubKey;
 
     TransactionOutput out;
@@ -319,7 +287,7 @@ bool Currency::constructMinerTx(uint32_t height, size_t medianSize, uint64_t alr
   tx.version = TRANSACTION_VERSION_1;
   //lock
   tx.unlockTime = height + m_minedMoneyUnlockWindow;
-  tx.inputs.push_back(in);
+  tx.inputs.emplace_back(in);
   return true;
 }
 
@@ -515,9 +483,6 @@ difficulty_type Currency::nextDifficulty(std::vector<uint64_t> timestamps,
 
 bool Currency::checkProofOfWorkV1(Crypto::cn_context& context, const Block& block, difficulty_type currentDiffic,
   Crypto::Hash& proofOfWork) const {
-  if (block.majorVersion > BLOCK_MAJOR_VERSION_2) {
-    return false;
-  }
 
   if (!get_block_longhash(context, block, proofOfWork)) {
     return false;
@@ -526,55 +491,11 @@ bool Currency::checkProofOfWorkV1(Crypto::cn_context& context, const Block& bloc
   return check_hash(proofOfWork, currentDiffic);
 }
 
-bool Currency::checkProofOfWorkV2(Crypto::cn_context& context, const Block& block, difficulty_type currentDiffic,
-  Crypto::Hash& proofOfWork) const {
-  if (block.majorVersion < BLOCK_MAJOR_VERSION_3) {
-    return false;
-  }
-
-  if (!get_block_longhash(context, block, proofOfWork)) {
-    return false;
-  }
-
-  if (!check_hash(proofOfWork, currentDiffic)) {
-    return false;
-  }
-
-  TransactionExtraMergeMiningTag mmTag;
-  if (!getMergeMiningTagFromExtra(block.rootBlock.baseTransaction.extra, mmTag)) {
-    logger(ERROR) << "merge mining tag wasn't found in extra of the root block miner transaction";
-    return false;
-  }
-
-  if (8 * sizeof(m_genesisBlockHash) < block.rootBlock.blockchainBranch.size()) {
-    return false;
-  }
-
-  Crypto::Hash auxBlockHeaderHash;
-  if (!get_aux_block_header_hash(block, auxBlockHeaderHash)) {
-    return false;
-  }
-
-  Crypto::Hash auxBlocksMerkleRoot;
-  Crypto::tree_hash_from_branch(block.rootBlock.blockchainBranch.data(), block.rootBlock.blockchainBranch.size(),
-    auxBlockHeaderHash, &m_genesisBlockHash, auxBlocksMerkleRoot);
-
-  if (auxBlocksMerkleRoot != mmTag.merkleRoot) {
-    logger(ERROR, BRIGHT_YELLOW) << "Aux block hash wasn't found in merkle tree";
-    return false;
-  }
-
-  return true;
-}
 
 bool Currency::checkProofOfWork(Crypto::cn_context& context, const Block& block, difficulty_type currentDiffic, Crypto::Hash& proofOfWork) const {
   switch (block.majorVersion) {
   case BLOCK_MAJOR_VERSION_1:
-  case BLOCK_MAJOR_VERSION_2:
     return checkProofOfWorkV1(context, block, currentDiffic, proofOfWork);
-  case BLOCK_MAJOR_VERSION_3:
-  case BLOCK_MAJOR_VERSION_4:
-    return checkProofOfWorkV2(context, block, currentDiffic, proofOfWork);
   }
 
   logger(ERROR, BRIGHT_RED) << "Unknown block major version: " << block.majorVersion << "." << block.minorVersion;
@@ -647,9 +568,6 @@ CurrencyBuilder::CurrencyBuilder(Logging::ILogger& log) : m_currency(log) {
   mempoolTxFromAltBlockLiveTime(parameters::CRYPTONOTE_MEMPOOL_TX_FROM_ALT_BLOCK_LIVETIME);
   numberOfPeriodsToForgetTxDeletedFromPool(parameters::CRYPTONOTE_NUMBER_OF_PERIODS_TO_FORGET_TX_DELETED_FROM_POOL);
 
-  upgradeHeightV2(parameters::UPGRADE_HEIGHT_V2);
-  upgradeHeightV3(parameters::UPGRADE_HEIGHT_V3);
-  upgradeHeightV4(parameters::UPGRADE_HEIGHT_V4);
   upgradeVotingThreshold(parameters::UPGRADE_VOTING_THRESHOLD);
   upgradeVotingWindow(parameters::UPGRADE_VOTING_WINDOW);
   upgradeWindow(parameters::UPGRADE_WINDOW);
@@ -674,7 +592,7 @@ Transaction CurrencyBuilder::generateGenesisTransaction() {
 
   return tx;
 }
-
+// Ddecimla place setting for the coin it's self..
 CurrencyBuilder& CurrencyBuilder::numberOfDecimalPlaces(size_t val) {
   m_currency.m_numberOfDecimalPlaces = val;
   m_currency.m_coin = 1;
@@ -705,7 +623,7 @@ CurrencyBuilder& CurrencyBuilder::upgradeWindow(size_t val) {
   if (val <= 0) {
     throw std::invalid_argument("val at upgradeWindow()");
   }
-  m_currency.m_upgradeWindow = val;
+  m_currency.m_upgradeWindow = static_cast<uint32_t>(val);
   return *this;
 }
 
