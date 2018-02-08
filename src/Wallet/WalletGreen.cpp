@@ -5,36 +5,6 @@
 
 #include "WalletGreen.h"
 
-#include <algorithm>
-#include <ctime>
-#include <cassert>
-#include <numeric>
-#include <random>
-#include <set>
-#include <tuple>
-#include <utility>
-
-#include <System/EventLock.h>
-#include <System/RemoteContext.h>
-
-#include "ITransaction.h"
-
-#include "Common/ScopeExit.h"
-#include "Common/ShuffleGenerator.h"
-#include "Common/StdInputStream.h"
-#include "Common/StdOutputStream.h"
-#include "Common/StringTools.h"
-#include "CryptoNoteCore/Account.h"
-#include "CryptoNoteCore/Currency.h"
-#include "CryptoNoteCore/CryptoNoteFormatUtils.h"
-#include "CryptoNoteCore/CryptoNoteTools.h"
-#include "CryptoNoteCore/TransactionApi.h"
-#include "crypto/crypto.h"
-#include "Transfers/TransfersContainer.h"
-#include "WalletSerialization.h"
-#include "WalletErrors.h"
-#include "WalletUtils.h"
-
 using namespace Common;
 using namespace Crypto;
 using namespace CryptoNote;
@@ -2383,7 +2353,7 @@ void WalletGreen::getViewKeyKnownBlocks(const Crypto::PublicKey& viewPublicKey) 
 ///pre: source address belongs to current container
 CryptoNote::AccountPublicAddress WalletGreen::getChangeDestination(const std::string& changeDestinationAddress, const std::vector<std::string>& sourceAddresses) const {
   if (!changeDestinationAddress.empty()) {
-    return parseAccountAddressString(changeDestinationAddress, m_currency);
+   // return parseAccountAddressString();
   }
 
   if (m_walletsContainer.size() == 1) {
@@ -2391,12 +2361,12 @@ CryptoNote::AccountPublicAddress WalletGreen::getChangeDestination(const std::st
   }
 
   assert(sourceAddresses.size() == 1 && isMyAddress(sourceAddresses[0]));
-  return parseAccountAddressString(sourceAddresses[0], m_currency);
+  //return//parseAccountAddressString(sourceAddresses[0], m_currency);
 }
 
 bool WalletGreen::isMyAddress(const std::string& addressString) const {
-  CryptoNote::AccountPublicAddress address = parseAccountAddressString(addressString, m_currency);
-  return m_viewPublicKey == address.viewPublicKey && m_walletsContainer.get<KeysIndex>().count(address.spendPublicKey) != 0;
+ // CryptoNote::AccountPublicAddress //address = parseAccountAddressString(addressString, m_currency);
+ // return m_viewPublicKey == address.viewPublicKey && m_walletsContainer.get<KeysIndex>().count(address.spendPublicKey) != 0;
 }
 
 void WalletGreen::deleteContainerFromUnlockTransactionJobs(const ITransfersContainer* container) {

@@ -4,7 +4,35 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #pragma once
+#include <algorithm>
+#include <ctime>
+#include <cassert>
+#include <numeric>
+#include <random>
+#include <set>
+#include <tuple>
+#include <utility>
 
+#include <System/EventLock.h>
+#include <System/RemoteContext.h>
+
+#include "ITransaction.h"
+
+#include "Common/ScopeExit.h"
+#include "Common/ShuffleGenerator.h"
+#include "Common/StdInputStream.h"
+#include "Common/StdOutputStream.h"
+#include "Common/StringTools.h"
+#include "CryptoNoteCore/Account.h"
+#include "CryptoNoteCore/Currency.h"
+#include "CryptoNoteCore/CryptoNoteFormatUtils.h"
+#include "CryptoNoteCore/CryptoNoteTools.h"
+#include "CryptoNoteCore/TransactionApi.h"
+#include "crypto/crypto.h"
+#include "Transfers/TransfersContainer.h"
+#include "WalletSerialization.h"
+#include "WalletErrors.h"
+#include "WalletUtils.h"
 #include "IWallet.h"
 
 #include <queue>
