@@ -4,7 +4,13 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "InterruptedException.h"
-
-namespace {
+//namespace {
 //char suppressMSVCWarningLNK4221;
-}
+//}
+
+//rainmanp7
+#ifdef _WIN32
+namespace {
+    char suppressMSVCWarningLNK4221;
+};
+#endif

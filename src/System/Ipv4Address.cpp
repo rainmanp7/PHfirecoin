@@ -4,10 +4,8 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "Ipv4Address.h"
-#include <stdexcept>
 
 namespace System {
-
 namespace {
 
 uint8_t readUint8(const std::string& source, size_t& offset) {
@@ -15,7 +13,7 @@ uint8_t readUint8(const std::string& source, size_t& offset) {
     throw std::runtime_error("Unable to read value from string");
   }
 
-  uint8_t value = source[offset] - '0';
+  auto value = static_cast<uint8_t>(source[offset] - '0');
   if (offset + 1 == source.size() || source[offset + 1] < '0' || source[offset + 1] > '9') {
     offset = offset + 1;
     return value;
@@ -25,7 +23,7 @@ uint8_t readUint8(const std::string& source, size_t& offset) {
     throw std::runtime_error("Unable to read value from string");
   }
 
-  value = value * 10 + (source[offset + 1] - '0');
+  value = static_cast<uint8_t>(value * 10 + (source[offset + 1] - '0'));
   if (offset + 2 == source.size() || source[offset + 2] < '0' || source[offset + 2] > '9') {
     offset = offset + 2;
     return value;
@@ -35,7 +33,7 @@ uint8_t readUint8(const std::string& source, size_t& offset) {
     throw std::runtime_error("Unable to read value from string");
   }
 
-  value = value * 10 + (source[offset + 2] - '0');
+  value = static_cast<uint8_t>(value * 10 + (source[offset + 2] - '0'));
   offset = offset + 3;
   return value;
 }
@@ -101,8 +99,21 @@ bool Ipv4Address::isLoopback() const {
 }
 
 bool Ipv4Address::isPrivate() const {
-  // 127.0.0.0/8
-  return (value & 0xff000000) == (127 << 24);
+   if ((value & 0xffff0000) == ((192 << 24) | (168 << 16))) {
+        return
+            // 10.0.0.0/8
+                true;
+    } else {
+        if ((value & 0xff000000) == (10 << 24)) {
+            return
+                // 10.0.0.0/8
+                    true;
+        } else {
+            return
+                // 10.0.0.0/8
+                    (value & 0xfff00000) == ((172 << 24) | (16 << 16));
+        }
+    }
 }
 
 }

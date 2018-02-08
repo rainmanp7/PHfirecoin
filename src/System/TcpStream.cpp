@@ -63,8 +63,9 @@ bool TcpStreambuf::dumpBuffer(bool finalize) {
     if(count == 0) {
       return true;
     }
-
-    size_t transferred = connection.write(&writeBuf.front(), count);
+//rainmanp7====================
+    unsigned int transferred;
+    transferred = connection.write(&writeBuf.front(), count);
     if(transferred == count) {
       pbump(-static_cast<int>(count));
     } else {

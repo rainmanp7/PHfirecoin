@@ -11,7 +11,9 @@ namespace System {
 
 class InterruptedException : public std::exception {
   public:
-    virtual const char* what() const throw() override {
+    //virtual const char* what() const throw() override {
+    //rainmanp7
+    const char* what() const throw() override {
       return "interrupted";
     }
 };
