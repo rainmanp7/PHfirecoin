@@ -1,0 +1,3 @@
+The block chain has had the hieght stripped from it.
+The walletgreen has sections just comented out completely to avoid errors temporararly.
+It compiles with warnings :) for now.
