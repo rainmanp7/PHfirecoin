@@ -19,6 +19,11 @@ namespace CryptoNote {
         const uint64_t CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT =          60 * 60 * 2;
         const size_t BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW =             30;
         const uint64_t MONEY_SUPPLY =                                UINT64_C(858986905600000000);
+                                                         //8.5 billion with base of 150 coin return.
+//going from the left to the right at 8.5 billion will reduce this down to a smaller amount.. line 667
+// currency.cpp refers to this decimal placement at 10
+//Ultranote//UINT64_C(182,898,690.56000000000);
+//multiples of 12//18 million//UINT64_C(18446744073709551616);
 //===================================================================================
         const size_t CRYPTONOTE_REWARD_BLOCKS_WINDOW =               100;
         const size_t CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE =     200000; //size of block (bytes) after which reward for block calculated using block size
