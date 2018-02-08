@@ -4,16 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "Timer.h"
-#include <cassert>
-#include <stdexcept>
 
-#include <sys/timerfd.h>
-#include <sys/epoll.h>
-#include <unistd.h>
-
-#include "Dispatcher.h"
-#include <System/ErrorMessage.h>
-#include <System/InterruptedException.h>
 
 namespace System {
 
@@ -63,20 +54,20 @@ void Timer::sleep(std::chrono::nanoseconds duration) {
     timer = dispatcher->getTimer();
 
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration);
-    itimerspec expires;
+    itimerspec expires{};
     expires.it_interval.tv_nsec = expires.it_interval.tv_sec = 0;
     expires.it_value.tv_sec = seconds.count();
     expires.it_value.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(duration - seconds).count();
-    timerfd_settime(timer, 0, &expires, NULL);
+    timerfd_settime(timer, 0, &expires, nullptr);
 
-    ContextPair contextPair;
-    OperationContext timerContext;
+    ContextPair contextPair{};
+    OperationContext timerContext{};
     timerContext.interrupted = false;
     timerContext.context = dispatcher->getCurrentContext();
     contextPair.writeContext = nullptr;
     contextPair.readContext = &timerContext;
 
-    epoll_event timerEvent;
+    epoll_event timerEvent{};
     timerEvent.events = EPOLLIN | EPOLLONESHOT;
     timerEvent.data.ptr = &contextPair;
 
@@ -86,22 +77,30 @@ void Timer::sleep(std::chrono::nanoseconds duration) {
     dispatcher->getCurrentContext()->interruptProcedure = [&]() {
         assert(dispatcher != nullptr);
         assert(context != nullptr);
-        OperationContext* timerContext = static_cast<OperationContext*>(context);
+        auto * timerContext = static_cast<OperationContext*>(context);
         if (!timerContext->interrupted) {
           uint64_t value = 0;
           if(::read(timer, &value, sizeof value) == -1 ){
-            if(errno == EAGAIN or EWOULDBLOCK) {
-              timerContext->interrupted = true;
-              dispatcher->pushContext(timerContext->context);
+            if (errno == EWOULDBLOCK) {
+              if (errno == EAGAIN || 1) {
+                timerContext->interrupted = true;
+                dispatcher->pushContext(timerContext->context);
+              } else {
+                throw std::runtime_error("Timer::interrupt, read failed, " + lastErrorMessage());
+              }
             } else {
-              throw std::runtime_error("Timer::interrupt, read failed, "  + lastErrorMessage());
+              if (errno == EAGAIN) {
+                timerContext->interrupted = true;
+                dispatcher->pushContext(timerContext->context);
+              } else {
+                throw std::runtime_error("Timer::interrupt, read failed, " + lastErrorMessage());
+              }
             }
           } else {
             assert(value>0);
             dispatcher->pushContext(timerContext->context);
           }
 
-          epoll_event timerEvent;
           timerEvent.events = 0;
           timerEvent.data.ptr = nullptr;
 

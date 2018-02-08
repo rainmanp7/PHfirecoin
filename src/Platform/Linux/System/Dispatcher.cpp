@@ -10,12 +10,11 @@
 #include <sys/eventfd.h>
 #include <sys/timerfd.h>
 #include <fcntl.h>
-#include <string.h>
+//rainmanp7 changed the string to cstring
+#include <cstring>
 #include <ucontext.h>
 #include <unistd.h>
 #include "ErrorMessage.h"
-
-
 
 namespace System {
 
@@ -28,7 +27,8 @@ struct ContextMakingData {
 
 class MutextGuard {
 public:
-  MutextGuard(pthread_mutex_t& _mutex) : mutex(_mutex) {
+    //rainmanp7 made this explicit
+    explicit MutextGuard(pthread_mutex_t& _mutex) : mutex(_mutex) {
     auto ret = pthread_mutex_lock(&mutex);
     if (ret != 0) {
       throw std::runtime_error("pthread_mutex_lock failed, " + errorMessage(ret));
@@ -65,8 +65,8 @@ Dispatcher::Dispatcher() {
       } else {
         remoteSpawnEventContext.writeContext = nullptr;
         remoteSpawnEventContext.readContext = nullptr;
-
-        epoll_event remoteSpawnEventEpollEvent;
+//rainmanp7 Unintialized record type
+        epoll_event remoteSpawnEventEpollEvent{};
         remoteSpawnEventEpollEvent.events = EPOLLIN;
         remoteSpawnEventEpollEvent.data.ptr = &remoteSpawnEventContext;
 
@@ -126,15 +126,12 @@ Dispatcher::~Dispatcher() {
     timers.pop();
   }
 
-//-----------------------------------------
-// auto result = close(epoll); assert(result == 0);
-//---------------------------------------
-
-//auto result = close(epoll);
-
-  auto result = close(epoll); assert(result == 0);
-  result = close(remoteSpawnEvent); assert(result == 0);
-  result = pthread_mutex_destroy(reinterpret_cast<pthread_mutex_t*>(this->mutex)); assert(result == 0);
+  auto result = close(epoll);
+  assert(result == 0);
+  result = close(remoteSpawnEvent);
+  assert(result == 0);
+  result = pthread_mutex_destroy(reinterpret_cast<pthread_mutex_t*>(this->mutex));
+  assert(result == 0);
 }
 
 void Dispatcher::clear() {
@@ -164,11 +161,16 @@ void Dispatcher::dispatch() {
       firstResumingContext = context->next;
       break;
     }
-
-    epoll_event event;
+//rainmanp7 record type
+    epoll_event event{};
     int count = epoll_wait(epoll, &event, 1, -1);
     if (count == 1) {
-      ContextPair *contextPair = static_cast<ContextPair*>(event.data.ptr);
+
+
+      //ContextPair *contextPair = static_cast<ContextPair*>(event.data.ptr);
+      //rainmanp7 chaging this to auto to avoid duplicate naming conventions
+      //intializing with a cast to avoid duplicates
+      auto *contextPair = static_cast<ContextPair*>(event.data.ptr);
       if(((event.events & (EPOLLIN | EPOLLOUT)) != 0) && contextPair->readContext == nullptr && contextPair->writeContext == nullptr) {
         uint64_t buf;
         auto transferred = read(remoteSpawnEvent, &buf, sizeof buf);
@@ -205,7 +207,10 @@ void Dispatcher::dispatch() {
   }
 
   if (context != currentContext) {
-    ucontext_t* oldContext = static_cast<ucontext_t*>(currentContext->ucontext);
+      //rainmanp7 chaging this to auto to avoid duplicate naming conventions
+      //intializing with a cast to avoid duplicates
+    //ucontext_t* oldContext = static_cast<ucontext_t*>(currentContext->ucontext);
+      auto oldContext = static_cast<ucontext_t*>(currentContext->ucontext);
     currentContext = context;
     if (swapcontext(oldContext, static_cast<ucontext_t *>(context->ucontext)) == -1) {
       throw std::runtime_error("Dispatcher::dispatch, swapcontext failed, " + lastErrorMessage());
@@ -297,6 +302,7 @@ void Dispatcher::yield() {
 
     if(count > 0) {
       for(int i = 0; i < count; ++i) {
+
         ContextPair *contextPair = static_cast<ContextPair*>(events[i].data.ptr);
         if(((events[i].events & (EPOLLIN | EPOLLOUT)) != 0) && contextPair->readContext == nullptr && contextPair->writeContext == nullptr) {
           uint64_t buf;

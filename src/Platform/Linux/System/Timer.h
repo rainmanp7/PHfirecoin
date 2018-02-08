@@ -6,7 +6,14 @@
 #pragma once
 
 #include <chrono>
-
+#include <cassert>
+#include <stdexcept>
+#include <unistd.h>
+#include "System/timerfd.h"
+#include "System/epoll.h"
+#include "Dispatcher.h"
+#include "System/ErrorMessage.h"
+#include "System/InterruptedException.h"
 namespace System {
 
 class Dispatcher;
