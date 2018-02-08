@@ -49,11 +49,13 @@ namespace Crypto {
     }
     mlock(data, MAP_SIZE);
   }
-
+//rainmanp7
+// reconstituted the trow becasue of bad allocation block that equals 0
   cn_context::~cn_context() {
     if (munmap(data, MAP_SIZE) != 0) {
-      throw bad_alloc();
+      std::bad_alloc();
     }
+      mlock(data, MAP_SIZE);
   }
 
 #endif
