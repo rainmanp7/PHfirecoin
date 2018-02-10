@@ -1,4 +1,8 @@
-cmake_minimum_required(VERSION 2.8.6)
+cmake_minimum_required(VERSION 3.8.6)
+
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0003 OLD)
+endif(COMMAND cmake_policy)
 
 set(VERSION "0.1")
 # Packaged from commit 1febccfaee880955ac5acab479fc0e3c6f3aa7c6
