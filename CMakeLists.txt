@@ -4,12 +4,19 @@ if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 OLD)
 endif(COMMAND cmake_policy)
 
-set(VERSION "0.1")
+set(VERSION "5.1")
 # Packaged from commit 1febccfaee880955ac5acab479fc0e3c6f3aa7c6
 set(COMMIT 1febccfae)
-set(REFS " (HEAD -> master, tag: v4.0.3-beta)")
+set(REFS " (HEAD -> master, tag: v5.1.1)")
 
 set(PER_BLOCK_CHECKPOINT 0)
+
+# On Windows the MinGW is different and doesn't have include <mann.h> linux only file.
+# Your Visual Studio might work ,but probably not.. Cygwin has this base Linux file for memory
+# The slowhash in the crypto folder requires this. The MinGW in this Cmake is for
+# The linux version of MinGW not the Windows versions
+
+include_directories(${CMAKE_SOURCE_DIR})
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CONFIGURATION_TYPES Debug RelWithDebInfo Release CACHE TYPE INTERNAL)
@@ -20,7 +27,7 @@ enable_testing()
 # copy CTestCustom.cmake to build dir to disable long running tests in 'make test'
 configure_file(${CMAKE_SOURCE_DIR}/CTestCustom.cmake ${CMAKE_BINARY_DIR})
 
-project(DigitalNote)
+project(Phfirecoin)
 
 include_directories(include src external "${CMAKE_BINARY_DIR}/version")
 if(APPLE)
