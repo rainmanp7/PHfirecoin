@@ -11,10 +11,15 @@ set(REFS " (HEAD -> master, tag: v5.1.1)")
 
 set(PER_BLOCK_CHECKPOINT 0)
 
-# On Windows the MinGW is different and doesn't have include <mann.h> linux only file.
-# Your Visual Studio might work ,but probably not.. Cygwin has this base Linux file for memory
+# On Windows the MinGW is different and doesn't #have include <mman.h> 
+# Linux only file. #include <sys/mman.h> Their may be others?
+# Your Visual Studio might work ,but probably not.. 
+# Cygwin on windiws has this base Linux file for memory.
 # The slowhash in the crypto folder requires this. The MinGW in this Cmake is for
 # The linux version of MinGW not the Windows versions
+# Clion will fail to load the normal cmakelists from cygwin because
+# Environment variables are not set properly for windows simulating linux.
+# The programming here was mostly done on Linux not Windows ,like most coins.
 
 include_directories(${CMAKE_SOURCE_DIR})
 
