@@ -1,0 +1,4 @@
+﻿"dependencies": {
+"public": "git://github.com/rainmanp7/repo.git#phfirecoin",
+"private": "git+ssh://git@github.com:rainmanp7/repo.git#phfirecoin"
+}
