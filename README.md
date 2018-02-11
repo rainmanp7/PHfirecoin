@@ -221,9 +221,11 @@ Parts of the project are originally copyright (c) 2012-2013 The Cryptonote devel
 
 **Original Compilation:** Cryptonote.
 
-**Cryptonote Website**: CryptoNote - the next generation cryptocurrencyhttps://cryptonote.org
+**Cryptonote Website**:
+https://cryptonote.org
 
-**Cryptonote Github**:Github: https://github.com/cryptonotefoundation/cryptonote
+**Cryptonote Github**:
+https://github.com/cryptonotefoundation/cryptonote
 
 <Hr>
 
