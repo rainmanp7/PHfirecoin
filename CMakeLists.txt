@@ -92,8 +92,8 @@ else()
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 ${MINGW_FLAG} ${WARNINGS} ${C_WARNINGS} ${ARCH_FLAG} -maes")
 
 # Setting Boost Pthreads Begin ======================
-${CMAKE_CXX_FLAGS} -pthread
   if(NOT APPLE)
+${CMAKE_CXX_FLAGS} -pthread
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
   endif()
