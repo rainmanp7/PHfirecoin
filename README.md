@@ -3,6 +3,8 @@
 Copyright (c) November 2017, Phfirecoin
 Updated: 02-11-2018
 
+<Hr>
+
 **Development and Community Resources**
 
 <Hr>
@@ -13,8 +15,10 @@ Updated: 02-11-2018
 
 **Github**: https://github.com/rainmanp7/phfirecoin
 
-Generally here or FB Messenger.
+
 **Discord**: [https://discord.gg/hzuRz43](https://discord.gg/hzuRz43)
+Generally here or FB Messenger
+
 
 **Twitter**:  @phfirecoin
 
@@ -215,6 +219,25 @@ Parts of the project are originally copyright (c) 2012-2013 The Cryptonote devel
 
 <Hr>
 
+**Original Compilation:** Cryptonote.
+
+**Cryptonote Website**: CryptoNote - the next generation cryptocurrencyhttps://cryptonote.org
+
+**Cryptonote Github**:Github: https://github.com/cryptonotefoundation/cryptonote
+
+<Hr>
+
+**Forked from what is/was known as.**
+Ducknote - Darknote - DigitalNote
+
+**XDN Website**:http://digitalnote.org/
+
+**XDN Github**:https://github.com/xdn-project/digitalnote
+
+**XDN Discord**:
+https://discord.gg/bFUvPs
+
+<Hr>
 
 
 
