@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.8.6)
 
+set(MAKE_LEGACY_CYGWIN_WIN32=0)
+
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 OLD)
 endif(COMMAND cmake_policy)
@@ -40,13 +42,18 @@ if(APPLE)
   enable_language(ASM)
 endif()
 
-if(MSVC)
+if (MSVC)
 include_directories(src/Platform/Windows)
 elseif(APPLE)
 include_directories(src/Platform/OSX)
 else()
 include_directories(src/Platform/Linux)
 endif()
+
+include_directories(SYSTEM cygwin64/usr/include/sys)
+include_directories(SYSTEM usr/include/sys)
+include_directories(SYSTEM usr/include)
+include_directories(SYSTEM usr)
 
 set(STATIC ${MSVC} CACHE BOOL "Link libraries statically")
 
@@ -93,7 +100,6 @@ else()
 
 # Setting Boost Pthreads Begin ======================
   if(NOT APPLE)
-${CMAKE_CXX_FLAGS} -pthread
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
   endif()
@@ -123,7 +129,6 @@ ${CMAKE_CXX_FLAGS} -pthread
 #Don't set this to off unless you want to see allot of errors.
 
 set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto")
-
 
   endif()
   #if(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND NOT MINGW)
@@ -180,4 +185,11 @@ endif()
 
 add_subdirectory(external)
 add_subdirectory(src)
+
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#static const std::string slash="\\";
+#else
+#static const std::string slash="/";
+#endif
 
