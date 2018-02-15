@@ -16,7 +16,7 @@ Commits and pull requests Commit messages should be sensible. That means a subje
 <Hr>
 <H3>Code of Conduct</H3>
  (22/C4.1)](http://rfc.zeromq.org/spec:22) 
-<Br>
+<Br></em>
 <H3>
 License Copyright (c) 2017-2018</H3>
  <H4>The Phfirecoin Project.</H4>
