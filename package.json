@@ -1,8 +1,8 @@
 ﻿"dependencies": {
-"public": "git://github.com/rainmanp7/repo.git#phfirecoin",
+"public": "https://rainmanp7.github.io/PHfirecoin/repo.git#phfirecoin",
 "private": "git+ssh://git@github.com:rainmanp7/repo.git#phfirecoin"
 }
 "repository" :
   { "type" : "git"
-  , "url" : "https://github.com/rainmanp7/phfirecoin/github.git"
+  , "url" : "https://rainmanp7.github.io/PHfirecoin/github.git"
 
