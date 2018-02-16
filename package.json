@@ -1,8 +1,7 @@
-﻿"dependencies": {
-"public": "https://rainmanp7.github.io/PHfirecoin/repo.git#phfirecoin",
-"private": "git+ssh://git@github.com:rainmanp7/repo.git#phfirecoin"
+// -- package.json --
+{
+"name": "<%= name %>",
+"contributors": [
+"Chris Brown <muslimsoap@gmail.com> (https://github.com/rainmanp7)",
+]
 }
-"repository" :
-  { "type" : "git"
-  , "url" : "https://rainmanp7.github.io/PHfirecoin/github.git"
-
