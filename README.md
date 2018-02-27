@@ -83,7 +83,8 @@ If using the rpc wallet (simplewallet --rpc-bind-port), access to the wallet RPC
 Standard Building Required Dependencies.
 GCC 7 or later - Boost 1.55 or later- Cmake 3.9 or later.
 
-Upgrading to a higher Boost Version...
+Only Boost 1.55 works at this time.
+Will update as we move forward.
 
 Minimal Dependencies: GCC 4.7.3 or later, CMake 2.8.6 or later, and Boost 1.53 or later (except 1.54, more details here: http://goo.gl/RrCFmA).
 
