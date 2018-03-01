@@ -1,5 +1,10 @@
 Phfirecoin Notes:
 
+Notes: o3-01-2018
+The src/platform area can be changed.
+Removing the ones not nessary to drop code size. Like the linux only for linux.
+You could actually remove the unessential ones and refix the code needed to function ,for the correct operating system following the platform. This would make 3 version of the base code. Linux and Windows and Mac versions... This sounds really unneeded ,but it could serve a greater purpose. Especially during cross compile ,this could be beneficial.
+
 Notes: o2-21-2018
 Most includes are found to be missing across various places in alt coins. Some includes are actually not even present. Code classes are replaced or are created.
 Variuos improvements concerning missing
