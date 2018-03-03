@@ -1,4 +1,11 @@
 Phfirecoin Notes:
+Notes: o3-03-2018
+Deep configuration and corrections.
+Fixed deviation of code for cross compile. Reordering of directory structure and source code is
+now complete. A more solid working order has been obtained. Errors or warnings within code are more present
+and viable. A more sensible order is now working and getting fixed into operation.
+Cmake and another compilation are in 
+order to be used. A dual compilation option works.
 
 Notes: o3-01-2018
 The src/platform area can be changed.
