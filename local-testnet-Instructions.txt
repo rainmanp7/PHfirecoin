@@ -1,5 +1,7 @@
 The first folder with deamon and simplewallet and walletd in folder.
-at the terminal
+at the terminal.
+
+This is sometimes referred to as a loop back sever configuration.
 
 ./phfired --p2p-bind-port=28080 --allow-local-ip
 
