@@ -5,6 +5,8 @@
 
 #include "SwappedMap.h"
 
+#if defined(_WIN32)
 namespace {
 char suppressMSVCWarningLNK4221;
 }
+#endif
