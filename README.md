@@ -1,7 +1,7 @@
 ![npm version][npm-svg]
 [![Dependency Status][david-deps-svg]][david-deps-url]
 [![Dev dependency Status][david-devdeps-svg]][david-devdeps-url]
-
+[![Coverage Status](https://coveralls.io/repos/github/rainmanp7/PHfirecoin/badge.svg?branch=master)](https://coveralls.io/github/rainmanp7/PHfirecoin?branch=master)
 # PHF Philippines Fire Coin
 
 Copyright (c) November 2017, Phfirecoin
