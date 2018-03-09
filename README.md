@@ -1,4 +1,4 @@
-[!GitHub license]
+[![GitHub-license]]
 [![Dependency Status][david-deps-svg]][david-deps-url]
 [![Dev dependency Status][david-devdeps-svg]][david-devdeps-url]
 
@@ -7,7 +7,7 @@
 Copyright (c) November 2017, Phfirecoin
 Updated: 02-11-2018
 
-[GitHub license]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
+[GitHub-license]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
 [npm-svg]: https://img.shields.io/npm/v/rainmanp7.svg
 [npm-url]: https://www.npmjs.com/package/rainmanp7
 [travis-svg]: https://travis-ci.org/rainmanp7/phfirecoin.svg?branch=master
