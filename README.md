@@ -1,3 +1,6 @@
+[![Dependency Status][david-deps-svg]][david-deps-url]
+[![Dev dependency Status][david-devdeps-svg]][david-devdeps-url]
+
 # PHF Philippines Fire Coin
 
 Copyright (c) November 2017, Phfirecoin
@@ -9,7 +12,7 @@ Updated: 02-11-2018
 
 <Hr>
 <img src="https://david-dm.org/rainmanp7/repo.svg"alt="Dependencies">
-
+https://david-dm.org/rainmanp7/repo.svg
 <Hr>
 
 **Webpage**: [www.phfirecoin.com](http://www.phfirecoin.com)

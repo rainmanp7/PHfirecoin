@@ -1,0 +1,43 @@
+﻿{
+  "name": "phfirecoin",
+  "author": {
+    "name": "Chris Brown",
+    "email": "muslimsoap@gmail.com",
+    "url": "http://www.phfirecoin.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "Cryptonote",
+    "Philippines",
+    "Crypto Currency",
+    "Phfirecoin"
+  ],
+  "version": "4.5.1",
+  "description": "Philippines Number 1 Crypto Currency.",
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "prepare": "npm run build",
+    "test": "npm run build && mocha",
+    "example": "node example/example.js",
+    "prettier": "./node_modules/.bin/prettier --write './**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:phfirecoin/spritefont.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "mocha": "^5.0.1",
+    "nyc": "^11.4.1",
+    "prettier": "^1.10.2"
+  },
+  "dependencies": {
+    "functional-paint": "0.3.0",
+    "commander": "^2.14.1",
+    "pngjs": "^3.3.2"
+  }
+}
