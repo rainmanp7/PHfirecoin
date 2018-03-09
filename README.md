@@ -11,7 +11,7 @@ Updated: 02-11-2018
 [Lic]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
 
 [npm-svg]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
-[npm-url]: https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
+[npm-url]: https://img.shields.io/github/license/rainmanp7
 
 
 [travis-svg]: https://travis-ci.org/rainmanp7/PHfirecoin.svg?branch=master
