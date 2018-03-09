@@ -8,7 +8,8 @@ Updated: 02-11-2018
 **Development and Community Resources**
 
 <Hr>
-https://david-dm.org/rainmanp7/repo.svg
+<img src="https://david-dm.org/rainmanp7/repo.svg"alt="Dependencies">
+
 <Hr>
 
 **Webpage**: [www.phfirecoin.com](http://www.phfirecoin.com)
