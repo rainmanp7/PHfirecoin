@@ -22,9 +22,6 @@ Updated: 02-11-2018
 **Development and Community Resources**
 
 <Hr>
-<img src="https://david-dm.org/rainmanp7/repo.svg"alt="Dependencies">
-https://david-dm.org/rainmanp7/repo.svg
-<Hr>
 
 **Webpage**: [www.phfirecoin.com](http://www.phfirecoin.com)
 
