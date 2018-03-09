@@ -1,4 +1,4 @@
-[![npm version][npm-svg]
+![npm version][npm-svg]
 [![Dependency Status][david-deps-svg]][david-deps-url]
 [![Dev dependency Status][david-devdeps-svg]][david-devdeps-url]
 
