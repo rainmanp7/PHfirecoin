@@ -6,6 +6,17 @@
 Copyright (c) November 2017, Phfirecoin
 Updated: 02-11-2018
 
+
+[npm-svg]: https://img.shields.io/npm/v/spritefont.svg
+[npm-url]: https://www.npmjs.com/package/spritefont
+[travis-svg]: https://travis-ci.org/phfirecoin/spritefont.svg?branch=master
+[travis-url]: https://travis-ci.org/phfirecoin/spritefont
+[david-deps-svg]: https://david-dm.org/phfirecoin/spritefont.svg
+[david-deps-url]: https://david-dm.org/phfirecoun/spritefont
+[david-devdeps-svg]: https://david-dm.org/phfirecoin/spritefont/dev-status.svg
+[david-devdeps-url]: https://david-dm.org/phfirecoin/spritefont#info=devDependencies
+
+
 <Hr>
 
 **Development and Community Resources**
