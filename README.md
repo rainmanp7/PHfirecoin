@@ -1,4 +1,4 @@
-[![GitHub-license]]
+[![npm version][npm-svg]
 [![Dependency Status][david-deps-svg]][david-deps-url]
 [![Dev dependency Status][david-devdeps-svg]][david-devdeps-url]
 
@@ -8,8 +8,10 @@ Copyright (c) November 2017, Phfirecoin
 Updated: 02-11-2018
 
 [GitHub-license]:
-[npm-svg]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
-[npm-url]: https://www.npmjs.com/package/rainmanp7
+[Lic]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
+
+[npm-url]: https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
+
 [travis-svg]: https://travis-ci.org/rainmanp7/phfirecoin.svg?branch=master
 [travis-url]: https://travis-ci.org/rainmanp7/phfirecoin
 [david-deps-svg]: https://david-dm.org/rainmanp7/phfirecoin.svg
@@ -261,10 +263,6 @@ Ducknote - Darknote - DigitalNote
 https://discord.gg/bFUvPs
 
 <Hr>
-
-
-
-
 
 
 
