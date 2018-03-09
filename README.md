@@ -7,14 +7,14 @@ Copyright (c) November 2017, Phfirecoin
 Updated: 02-11-2018
 
 
-[npm-svg]: https://img.shields.io/npm/v/spritefont.svg
-[npm-url]: https://www.npmjs.com/package/spritefont
-[travis-svg]: https://travis-ci.org/phfirecoin/spritefont.svg?branch=master
-[travis-url]: https://travis-ci.org/phfirecoin/spritefont
-[david-deps-svg]: https://david-dm.org/phfirecoin/spritefont.svg
-[david-deps-url]: https://david-dm.org/phfirecoun/spritefont
-[david-devdeps-svg]: https://david-dm.org/phfirecoin/spritefont/dev-status.svg
-[david-devdeps-url]: https://david-dm.org/phfirecoin/spritefont#info=devDependencies
+[npm-svg]: https://img.shields.io/npm/v/rainmanp7.svg
+[npm-url]: https://www.npmjs.com/package/rainmanp7
+[travis-svg]: https://travis-ci.org/rainmanp7/phfirecoin.svg?branch=master
+[travis-url]: https://travis-ci.org/rainmanp7/phfirecoin
+[david-deps-svg]: https://david-dm.org/rainmanp7/phfirecoin.svg
+[david-deps-url]: https://david-dm.org/rainmanp7/phfirecoin
+[david-devdeps-svg]: https://david-dm.org/rainmanp7/phfirecoin/dev-status.svg
+[david-devdeps-url]: https://david-dm.org/rainmanp7/phfirecoin#info=devDependencies
 
 
 <Hr>
