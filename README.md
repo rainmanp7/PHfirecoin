@@ -1,4 +1,4 @@
-[!GitHub license]
+[![GitHub license]lic]
 [![Dependency Status][david-deps-svg]][david-deps-url]
 [![Dev dependency Status][david-devdeps-svg]][david-devdeps-url]
 
