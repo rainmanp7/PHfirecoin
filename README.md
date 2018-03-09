@@ -10,14 +10,16 @@ Updated: 02-11-2018
 [GitHub-license]:
 [Lic]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
 
+[npm-svg]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
 [npm-url]: https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
 
-[travis-svg]: https://travis-ci.org/rainmanp7/phfirecoin.svg?branch=master
-[travis-url]: https://travis-ci.org/rainmanp7/phfirecoin
-[david-deps-svg]: https://david-dm.org/rainmanp7/phfirecoin.svg
-[david-deps-url]: https://david-dm.org/rainmanp7/phfirecoin
-[david-devdeps-svg]: https://david-dm.org/rainmanp7/phfirecoin/dev-status.svg
-[david-devdeps-url]: https://david-dm.org/rainmanp7/phfirecoin#info=devDependencies
+
+[travis-svg]: https://travis-ci.org/rainmanp7/PHfirecoin.svg?branch=master
+[travis-url]: https://travis-ci.org/rainmanp7/PHfirecoin
+[david-deps-svg]: https://david-dm.org/rainmanp7/PHfirecoin.svg
+[david-deps-url]: https://david-dm.org/rainmanp7/PHfirecoin
+[david-devdeps-svg]: https://david-dm.org/rainmanp7/PHfirecoin/dev-status.svg
+[david-devdeps-url]: https://david-dm.org/rainmanp7/PHfirecoin#info=devDependencies
 
 
 <Hr>
