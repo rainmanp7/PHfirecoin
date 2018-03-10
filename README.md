@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/rainmanp7/PHfirecoin/badge.svg?branch=master)](https://coveralls.io/github/rainmanp7/PHfirecoin?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](http://ansicolortags.readthedocs.io/?badge=latest)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/Naereen/badges.svg)](http://isitmaintained.com/project/Naereen/badges "Percentage of issues still open")
-[![Generic badge](https://img.shields.io/badge/Build-passing-Blue.svg)](https://shields.io/)
+
 # PHF Philippines Fire Coin
 
 Copyright (c) November 2017, Phfirecoin
