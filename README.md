@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/rainmanp7/phfircoin.svg?branch=master)](https://travis-ci.org/rainmanp7/phfirecoin)
 ![npm version][npm-svg]
 [![Dependency Status][david-deps-svg]][david-deps-url]
 [![Coverage Status](https://coveralls.io/repos/github/rainmanp7/PHfirecoin/badge.svg?branch=master)](https://coveralls.io/github/rainmanp7/PHfirecoin?branch=master)
