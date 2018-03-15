@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/rainmanp7/PHfircoin.svg?branch=master)](https://travis-ci.org/rainmanp7/PHfirecoin)
-
 [![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](http://ansicolortags.readthedocs.io/?badge=latest)
 
 # PHF Philippines Fire Coin
