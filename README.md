@@ -1,25 +1,9 @@
 [![Build Status](https://travis-ci.org/rainmanp7/PHfircoin.svg?branch=master)](https://travis-ci.org/rainmanp7/PHfirecoin)
-[![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](http://ansicolortags.readthedocs.io/?badge=latest)
 
 # PHF Philippines Fire Coin
 
 Copyright (c) November 2017, Phfirecoin
 Updated: 02-11-2018
-
-[GitHub-license]:
-[Lic]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
-
-[npm-svg]:https://img.shields.io/github/license/rainmanp7/PHfirecoin.svg
-[npm-url]: https://img.shields.io/github/license/rainmanp7
-
-
-[travis-svg]: https://travis-ci.org/rainmanp7/PHfirecoin.svg?branch=master
-[travis-url]: https://travis-ci.org/rainmanp7/PHfirecoin
-[david-deps-svg]: https://david-dm.org/rainmanp7/PHfirecoin.svg
-[david-deps-url]: https://david-dm.org/rainmanp7/PHfirecoin
-[david-devdeps-svg]: https://david-dm.org/rainmanp7/PHfirecoin/dev-status.svg
-[david-devdeps-url]: https://david-dm.org/rainmanp7/PHfirecoin#info=devDependencies
-
 
 <Hr>
 
