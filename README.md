@@ -1,9 +1,6 @@
 [![Build Status](https://travis-ci.org/rainmanp7/PHfircoin.svg?branch=master)](https://travis-ci.org/rainmanp7/PHfirecoin)
-![npm version][npm-svg]
-[![Dependency Status][david-deps-svg]][david-deps-url]
-[![Coverage Status](https://coveralls.io/repos/github/rainmanp7/PHfirecoin/badge.svg?branch=master)](https://coveralls.io/github/rainmanp7/PHfirecoin?branch=master)
+
 [![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](http://ansicolortags.readthedocs.io/?badge=latest)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/Naereen/badges.svg)](http://isitmaintained.com/project/Naereen/badges "Percentage of issues still open")
 
 # PHF Philippines Fire Coin
 
