@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rainmanp7/PHfirecoin.svg?branch=master)](https://travis-ci.org/rainmanp7/PHfirecoin)
+
 # PHF Philippines Fire Coin
 
 Copyright (c) November 2017, Phfirecoin
