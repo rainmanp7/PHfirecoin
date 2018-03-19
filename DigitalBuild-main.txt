@@ -1,0 +1,18 @@
+﻿Hi I'm glad to meet you.
+I would like to use and promote your services if possible ,by advertising for you.
+
+If you could please look at my repository at 
+Github
+rainmanp7/PHfirecoin
+
+It has
+ boost 1.55 ,Cmake ,C++ and C 
+Programming inside and does a travis build pass.
+
+I would like it if you could give me step by step instructions. I will copy and upload and follow what ever steps you could assist me with please.
+
+Make pretend you were doing it for me ,and I can follow that information step by step click by click etc..
+
+PLEASE!
+
+Thank you ahead of time.
