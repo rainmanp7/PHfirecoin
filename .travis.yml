@@ -23,3 +23,4 @@
   os: 
      - osx
      #- linux
+bash <(curl -s https://codecov.io/bash) -t 02051e1c-7be5-4e94-99a5-cae27c8eacd7
