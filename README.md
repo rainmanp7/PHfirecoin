@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/rainmanp7/PHfirecoin.svg?branch=master)](https://travis-ci.org/rainmanp7/PHfirecoin)
 
-curl -u "chrisbrown54:1PqEyRscvkDgZtkDcqys" https://api.browserstack.com/automate/projects.json
+
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=<badge_key>)](https://www.browserstack.com/automate/public-build/<badge_key>)
 
 # PHF Philippines Fire Coin
 
@@ -251,7 +252,7 @@ https://discord.gg/bFUvPs
 
 <Hr>
 
-curl -u "chrisbrown54:1PqEyRscvkDgZtkDcqys" https://api.browserstack.com/automate/projects/<project-id>/badge_key
+<a href="https://www.browserstack.com/automate/public-build/<badge_key>"><img src='https://www.browserstack.com/automate/badge.svg?badge_key=<badge_key>'/></a>
 
 
 
