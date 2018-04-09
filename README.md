@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/rainmanp7/PHfirecoin.svg?branch=master)](https://travis-ci.org/rainmanp7/PHfirecoin)
 
+curl -u "chrisbrown54:1PqEyRscvkDgZtkDcqys" https://api.browserstack.com/automate/projects.json
+
 # PHF Philippines Fire Coin
 
 Copyright (c) November 2017, Phfirecoin
@@ -249,6 +251,7 @@ https://discord.gg/bFUvPs
 
 <Hr>
 
+curl -u "chrisbrown54:1PqEyRscvkDgZtkDcqys" https://api.browserstack.com/automate/projects/<project-id>/badge_key
 
 
 
